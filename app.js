@@ -30,6 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const affSection = document.getElementById('affiliate');
   const affTitle = document.getElementById('affTitle');
   const offersEl = document.getElementById('offers');
+  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
 
   let linesArray = [];
   let commentsArray = [];
@@ -37,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let currentLang = select.value || 'en-US';
 
   function loadLanguageData(langCode) {
-    fetch(`lines_${langCode.replace('-', '_')}.json`)
+    fetch(`${basePath}lines_${langCode.replace('-', '_')}.json`)
       .then(res => res.json())
       .then(data => {
         linesArray = data.lines;
