@@ -21,21 +21,24 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const introEl = document.getElementById('intro');
-  const lineEl = document.getElementById('line');
-  const btn = document.getElementById('generate');
-  const commentEl = document.getElementById('comment');
-  const select = document.getElementById('langSelect');
-  const langLabel = document.getElementById('langLabel');
-  const affSection = document.getElementById('affiliate');
-  const affTitle = document.getElementById('affTitle');
-  const offersEl = document.getElementById('offers');
-  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
+  const introEl     = document.getElementById('intro');
+  const lineEl      = document.getElementById('line');
+  const btn         = document.getElementById('generate');
+  const commentEl   = document.getElementById('comment');
+  const select      = document.getElementById('langSelect'); // <-- define aqui primeiro
+  const langLabel   = document.getElementById('langLabel');
+  const affSection  = document.getElementById('affiliate');
+  const affTitle    = document.getElementById('affTitle');
+  const offersEl    = document.getElementById('offers');
+  const basePath    = window.location.pathname.replace(/\/[^/]*$/, '/');
+
+  const bmcText     = document.getElementById('bmcText');
 
   let linesArray = [];
   let commentsArray = [];
 
-  let currentLang = select.value || 'en-US';
+  // mover pra cá
+  let currentLang = select?.value || 'en-US';
 
   function loadLanguageData(langCode) {
     fetch(`${basePath}lines_${langCode.replace('-', '_')}.json`)
@@ -98,24 +101,23 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-function updateUI() {
-  const t = translations[currentLang] || translations['en-US'];
-  introEl.textContent = t.intro;
-  lineEl.textContent = t.initial;
-  btn.textContent = t.generate;
-  langLabel.textContent = t.langLabel;
-  commentEl.textContent = '';
-  renderAffiliate();
+  function updateUI() {
+    const t = translations[currentLang] || translations['en-US'];
+    introEl.textContent   = t.intro;
+    lineEl.textContent    = t.initial;
+    btn.textContent       = t.generate;
+    langLabel.textContent = t.langLabel;
+    commentEl.textContent = '';
+    renderAffiliate();
 
-  const bmcText = document.getElementById('bmcText');
-if (bmcText) {
-  bmcText.textContent = {
-    'en-US': 'Support us with a coffee ☕',
-    'pt-BR': 'Nos apoie com um café ☕',
-    'es-ES': 'Apóyanos con un café ☕'
-  }[currentLang] || 'Support us with a coffee ☕';
- }
-}
+    if (bmcText) {
+      bmcText.textContent = {
+        'en-US': 'Support us with a coffee ☕',
+        'pt-BR': 'Nos apoie com um café ☕',
+        'es-ES': 'Apóyanos con un café ☕'
+      }[currentLang] || 'Support us with a coffee ☕';
+    }
+  }
 
   btn.addEventListener('click', () => {
     if (linesArray.length === 0) return;
@@ -146,7 +148,7 @@ if (bmcText) {
     }
   }
 
-  const copyIcon = document.getElementById('copyIcon');
+  const copyIcon  = document.getElementById('copyIcon');
   const shareIcon = document.getElementById('shareIcon');
 
   if (copyIcon) {
@@ -176,13 +178,13 @@ if (bmcText) {
     });
   }
 
-  // Detectar idioma inicial do navegador
+  // Detecta idioma do navegador no primeiro carregamento
   const browserLang = navigator.language.startsWith('pt') ? 'pt-BR'
                     : navigator.language.startsWith('es') ? 'es-ES'
                     : 'en-US';
 
   select.value = browserLang;
-  currentLang = browserLang;
+  currentLang  = browserLang;
   loadLanguageData(currentLang);
 
 });
