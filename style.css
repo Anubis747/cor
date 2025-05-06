@@ -73,3 +73,14 @@ button:hover {
 label, select {
   font-size: 0.9rem;
 }
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.actions button {
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+}
+
