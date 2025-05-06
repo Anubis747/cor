@@ -117,6 +117,31 @@ window.addEventListener('DOMContentLoaded', () => {
       }[currentLang] || 'Support us with a coffee ☕';
     }
   }
+  const carousel = document.getElementById('carousel');
+
+const affiliateProducts = [
+  { name: "Flower Bouquet 🌸", link: "https://www.amazon.com/dp/B07QK6C6HB?tag=flirtspark09-20" },
+  { name: "Chocolate Gift Box 🍫", link: "https://www.amazon.com/dp/B078H3T7R3?tag=flirtspark09-20" },
+  { name: "Romantic Candle 🕯️", link: "https://www.amazon.com/dp/B09G3HRMXY?tag=flirtspark09-20" },
+  { name: "Funny Love Mug ☕", link: "https://www.amazon.com/dp/B08QFFG8YZ?tag=flirtspark09-20" },
+  { name: "Date Night Card Game 🎴", link: "https://www.amazon.com/dp/B084ZHCZTZ?tag=flirtspark09-20" },
+  { name: "Neon Heart Light 💡", link: "https://www.amazon.com/dp/B08BLNNY6P?tag=flirtspark09-20" },
+  { name: "Love Coupons 💌", link: "https://www.amazon.com/dp/B078GQZ5ZG?tag=flirtspark09-20" },
+  { name: "Romantic Journal 📓", link: "https://www.amazon.com/dp/1646113751?tag=flirtspark09-20" },
+  { name: "Plush Bear with Heart 🧸", link: "https://www.amazon.com/dp/B00QH7NZ0E?tag=flirtspark09-20" },
+  { name: "Love Necklace 💖", link: "https://www.amazon.com/dp/B074N9FC6X?tag=flirtspark09-20" }
+];
+
+let carouselIndex = 0;
+
+function updateCarousel() {
+  const product = affiliateProducts[carouselIndex];
+  carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
+  carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
+}
+
+setInterval(updateCarousel, 4000);
+updateCarousel();
 
   btn.addEventListener('click', () => {
     if (linesArray.length === 0) return;
