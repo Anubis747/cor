@@ -1,66 +1,139 @@
-body {
-  background: #f4f4f9;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  margin: 0;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-}
-main {
-  width: 100%;
-  max-width: 360px;
-  text-align: center;
-}
-.intro {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 1.2rem;
-}
-.card, .affiliate {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-.line {
-  font-size: 1.1rem;
-  min-height: 3em;
-  margin: 1rem 0;
-}
-button {
-  background: #ff6b6b;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
-  transition: background 0.2s;
-  display: block;
-  margin: 0.6rem auto;
-}
-button:hover {
-  background: #ff4757;
-}
-.comment {
-  margin-top: 0.8rem;
-  font-style: italic;
-  color: #555;
-}
-.lang-switch {
-  margin-top: 1rem;
-}
-label, select {
-  font-size: 0.9rem;
-}
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.actions button {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-} :contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}
+window.addEventListener('DOMContentLoaded', () => {
+  const data = {
+    'en-US': {
+      initial:  "Ready for a pick‑up line?",
+      intro:    "Click the button to get a cheesy pick‑up line and share it!",
+      generate: "Generate",
+      lines: [
+        "Are you a magician? Because whenever I look at you, everyone else disappears. ✨",
+        "Do you have a name, or can I call you mine? 💌",
+        "Is your dad a boxer? Because you're a knockout! 🥊"
+      ],
+      comments: ["You nailed it! 🔥","That’s fire! 🚀","Smooth move! 😉"],
+      affTitle: "Surprise with a gift! 🎁",
+      offers: [
+        { title: "Bouquet of Flowers", img:"flower.jpg", link:"https://amzn.to/US_FLOWER" },
+        { title: "Box of Chocolates", img:"choco.jpg", link:"https://amzn.to/US_CHOCOLATE" }
+      ],
+      langLabel: "Choose another language:"
+    },
+    'pt-BR': {
+      initial:  "Pronto para uma cantada divertida?",
+      intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
+      generate: "Gerar Cantada",
+      lines: [
+        "Você é Wi‑Fi? Porque estou sentindo conexão. 📶",
+        "Seu sorriso ilumina mais que o sol nascente. ☀️",
+        "Se beleza fosse música, você seria uma sinfonia. 🎶"
+      ],
+      comments: ["Arrasou!! 🔥","Ai sim você vai longe! 🚀","Mandou bem! 😉"],
+      affTitle: "Surpreenda com um presente! 🎁",
+      offers: [
+        { title: "Buquê de Flores", img:"flower.jpg", link:"https://amzn.to/BR_FLOWER" },
+        { title: "Caixa de Chocolates", img:"choco.jpg", link:"https://amzn.to/BR_CHOCOLATE" }
+      ],
+      langLabel: "Escolha outro idioma:"
+    },
+    'es-ES': {
+      initial:  "¿Listo para una cantada divertida?",
+      intro:    "¡Haz clic para ver una cantada divertida y compártela!",
+      generate: "Generar Frase",
+      lines: [
+        "¿Eres un imán? Porque me atraes como nada más. 🧲",
+        "Si la belleza fuera tiempo, tú serías la eternidad. ⌛️",
+        "¿Eres una estrella? Porque iluminas mi noche. ⭐️"
+      ],
+      comments: ["¡Buenísimo! 🔥","¡Eso fue genial! 🚀","¡Qué smooth! 😉"],
+      affTitle: "¡Sorprende con un regalo! 🎁",
+      offers: [
+        { title: "Ramo de Flores", img:"flower.jpg", link:"https://amzn.to/ES_FLOWER" },
+        { title: "Caja de Chocolates", img:"choco.jpg", link:"https://amzn.to/ES_CHOCOLATE" }
+      ],
+      langLabel: "Elige otro idioma:"
+    }
+  };
+
+  // capturar elementos — agora só copyIcon/shareIcon, não copyBtn
+  const introEl    = document.getElementById('intro');
+  const lineEl     = document.getElementById('line');
+  const btn        = document.getElementById('generate');
+  const commentEl  = document.getElementById('comment');
+  const offersEl   = document.getElementById('offers');
+  const affSection = document.getElementById('affiliate');
+  const affTitle   = document.getElementById('affTitle');
+  const select     = document.getElementById('langSelect');
+  const langLabel  = document.getElementById('langLabel');
+  const copyIcon   = document.getElementById('copyIcon');
+  const shareIcon  = document.getElementById('shareIcon');
+
+  // fallback clipboard
+  function copyText(text) {
+    if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text);
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position = 'absolute'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok ? Promise.resolve() : Promise.reject();
+  }
+
+  // Copy listener
+  if (copyIcon) copyIcon.addEventListener('click', () => {
+    const t = lineEl.textContent; if (!t) return;
+    copyText(t)
+      .then(() => { commentEl.textContent = "Copied! ✅"; setTimeout(() => commentEl.textContent = "",1500); })
+      .catch(() => { commentEl.textContent = "Copy failed 😢"; setTimeout(() => commentEl.textContent = "",1500); });
+  });
+
+  // Share listener
+  if (shareIcon) shareIcon.addEventListener('click', () => {
+    const t = lineEl.textContent; if (!t) return;
+    const u = window.location.href;
+    if (navigator.share) navigator.share({ title:'Cheesy or Not?', text:t, url:u }).catch(()=>{});
+    else window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t+' '+u),'_blank','noopener');
+  });
+
+  // detect locale
+  let loc = navigator.language;
+  if (!data[loc]) {
+    if (loc.startsWith('pt')) loc = 'pt-BR';
+    else if (loc.startsWith('es')) loc = 'es-ES';
+    else loc = 'en-US';
+  }
+  let currentLoc = loc;
+  select.value = currentLoc;
+
+  function renderOffers() {
+    offersEl.innerHTML = '';
+    data[currentLoc].offers.forEach(o => {
+      const d = document.createElement('div');
+      d.className = 'offer';
+      d.innerHTML = `<img src="${o.img}" alt=""><a href="${o.link}" target="_blank">${o.title}</a>`;
+      offersEl.appendChild(d);
+    });
+  }
+
+  function updateUI() {
+    const c = data[currentLoc];
+    introEl.textContent   = c.intro;
+    btn.textContent       = c.generate;
+    lineEl.textContent    = c.initial;
+    commentEl.textContent = '';
+    affTitle.textContent  = c.affTitle;
+    langLabel.textContent = c.langLabel;
+    renderOffers();
+    affSection.style.display = (currentLoc==='pt-BR'||currentLoc==='en-US')?'block':'none';
+  }
+
+  // generate line
+  btn.addEventListener('click', () => {
+    const c = data[currentLoc];
+    lineEl.textContent    = c.lines[Math.floor(Math.random()*c.lines.length)];
+    commentEl.textContent = c.comments[Math.floor(Math.random()*c.comments.length)];
+  });
+  // change language
+  select.addEventListener('change', e => { currentLoc = e.target.value; updateUI(); });
+
+  updateUI();
+});

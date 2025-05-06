@@ -18,13 +18,13 @@ window.addEventListener('DOMContentLoaded', () => {
       langLabel: "Choose another language:"
     },
     'pt-BR': {
-      initial:  "Vamos gerar uma cantada?",
+      initial:  "Pronto para uma cantada divertida?",
       intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
-      generate: "Generate",
+      generate: "Gerar Cantada",
       lines: [
-        "Você acredita em amor à primeira vista ou devo passar de novo? 👀",
-        "Seu pai é padeiro? Porque você é um sonho! 🥐",
-        "Você é Wi‑Fi? Porque estou sentindo conexão. 📶"
+        "Você é Wi‑Fi? Porque estou sentindo conexão. 📶",
+        "Seu sorriso ilumina mais que o sol nascente. ☀️",
+        "Se beleza fosse música, você seria uma sinfonia. 🎶"
       ],
       comments: ["Arrasou!! 🔥","Ai sim você vai longe! 🚀","Mandou bem! 😉"],
       affTitle: "Surpreenda com um presente! 🎁",
@@ -35,13 +35,13 @@ window.addEventListener('DOMContentLoaded', () => {
       langLabel: "Escolha outro idioma:"
     },
     'es-ES': {
-      initial:  "¡Hora de una frase divertida!",
-      intro:    "¡Haz clic para generar una frase divertida y compártela!",
-      generate: "Generate",
+      initial:  "¿Listo para una cantada divertida?",
+      intro:    "¡Haz clic para ver una cantada divertida y compártela!",
+      generate: "Generar Frase",
       lines: [
-        "¿Eres un mago? Porque cada vez que te veo, desaparece todo lo demás. ✨",
-        "¿Tienes nombre o puedo llamarte mío? 💌",
-        "¿Tu papá es boxeador? ¡Porque eres un nocaut! 🥊"
+        "¿Eres un imán? Porque me atraes como nada más. 🧲",
+        "Si la belleza fuera tiempo, tú serías la eternidad. ⌛️",
+        "¿Eres una estrella? Porque iluminas mi noche. ⭐️"
       ],
       comments: ["¡Buenísimo! 🔥","¡Eso fue genial! 🚀","¡Qué smooth! 😉"],
       affTitle: "¡Sorprende con un regalo! 🎁",
@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // elementos
+  // capturar elementos — agora só copyIcon/shareIcon, não copyBtn
   const introEl    = document.getElementById('intro');
   const lineEl     = document.getElementById('line');
   const btn        = document.getElementById('generate');
@@ -63,10 +63,10 @@ window.addEventListener('DOMContentLoaded', () => {
   const affTitle   = document.getElementById('affTitle');
   const select     = document.getElementById('langSelect');
   const langLabel  = document.getElementById('langLabel');
-  const copyBtn    = document.getElementById('copyBtn');
-  const shareBtn   = document.getElementById('shareBtn');
+  const copyIcon   = document.getElementById('copyIcon');
+  const shareIcon  = document.getElementById('shareIcon');
 
-  // função de cópia com fallback
+  // fallback clipboard
   function copyText(text) {
     if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text);
     const ta = document.createElement('textarea');
@@ -78,21 +78,23 @@ window.addEventListener('DOMContentLoaded', () => {
     return ok ? Promise.resolve() : Promise.reject();
   }
 
-  // ligações de evento — só se existir
-  if (copyBtn) copyBtn.addEventListener('click', () => {
+  // Copy listener
+  if (copyIcon) copyIcon.addEventListener('click', () => {
     const t = lineEl.textContent; if (!t) return;
     copyText(t)
       .then(() => { commentEl.textContent = "Copied! ✅"; setTimeout(() => commentEl.textContent = "",1500); })
       .catch(() => { commentEl.textContent = "Copy failed 😢"; setTimeout(() => commentEl.textContent = "",1500); });
   });
-  if (shareBtn) shareBtn.addEventListener('click', () => {
+
+  // Share listener
+  if (shareIcon) shareIcon.addEventListener('click', () => {
     const t = lineEl.textContent; if (!t) return;
     const u = window.location.href;
     if (navigator.share) navigator.share({ title:'Cheesy or Not?', text:t, url:u }).catch(()=>{});
-    else window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t+' '+u), '_blank','noopener');
+    else window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t+' '+u),'_blank','noopener');
   });
 
-  // locale e UI
+  // detect locale
   let loc = navigator.language;
   if (!data[loc]) {
     if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -124,11 +126,13 @@ window.addEventListener('DOMContentLoaded', () => {
     affSection.style.display = (currentLoc==='pt-BR'||currentLoc==='en-US')?'block':'none';
   }
 
+  // generate line
   btn.addEventListener('click', () => {
     const c = data[currentLoc];
-    lineEl.textContent = c.lines[Math.floor(Math.random()*c.lines.length)];
+    lineEl.textContent    = c.lines[Math.floor(Math.random()*c.lines.length)];
     commentEl.textContent = c.comments[Math.floor(Math.random()*c.comments.length)];
   });
+  // change language
   select.addEventListener('change', e => { currentLoc = e.target.value; updateUI(); });
 
   updateUI();
