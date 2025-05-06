@@ -20,53 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const introEl    = document.getElementById('intro');
-  const lineEl     = document.getElementById('line');
-  const btn        = document.getElementById('generate');
-  const commentEl  = document.getElementById('comment');
-  const select     = document.getElementById('langSelect');
-  const langLabel  = document.getElementById('langLabel');
-  const affTitle   = document.getElementById('affTitle');
-  const carousel   = document.getElementById('carousel');
-  const bmcText    = document.getElementById('bmcText');
-  const copyIcon   = document.getElementById('copyIcon');
-  const shareIcon  = document.getElementById('shareIcon');
+  const $ = id => document.getElementById(id);
 
-  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
+  const introEl    = $('intro');
+  const lineEl     = $('line');
+  const btn        = $('generate');
+  const commentEl  = $('comment');
+  const select     = $('langSelect');
+  const langLabel  = $('langLabel');
+  const affTitle   = $('affTitle');
+  const carousel   = $('carousel');
+  const bmcText    = $('bmcText');
+  const copyIcon   = $('copyIcon');
+  const shareIcon  = $('shareIcon');
+
+  const basePath = window.location.pathname.replace(/\\/[^/]*$/, '/');
   let linesArray = [];
   let commentsArray = [];
   let currentLang = select?.value || 'en-US';
 
-const affiliateProducts = [
-  { name: "100 Date Ideas Scratch Poster 🧡", link: "https://www.amazon.com.br/dp/B0CGLQSXCB?tag=flirtspark09-20" },
-  { name: "‘Great Grandpa’ Funny Mug ☕", link: "https://www.amazon.com.br/dp/B0CZV1TCYQ?tag=flirtspark09-20" },
-  { name: "South Park Mug & Socks Set 🧦", link: "https://www.amazon.com.br/dp/B0D6NFRFGX?tag=flirtspark09-20" },
-  { name: "Romantic Scented Candle 🕯️", link: "https://www.amazon.com.br/dp/B0CQ7CT1FW?tag=flirtspark09-20" },
-  { name: "Hidden Message Candle 💬", link: "https://www.amazon.com.br/dp/B0BRFRKB9C?tag=flirtspark09-20" },
-  { name: "‘Love of a Good Man’ Candle ❤️", link: "https://www.amazon.com.br/dp/B0B5XH95GT?tag=flirtspark09-20" },
-  { name: "Funny Couple Towel 🛁", link: "https://www.amazon.com.br/dp/B0B28SQS84?tag=flirtspark09-20" },
-  { name: "‘To My Love’ Acrylic Keepsake 💎", link: "https://www.amazon.com.br/dp/B0BG4V3G6G?tag=flirtspark09-20" },
-  { name: "Romantic LED ‘I Love You’ Lamp 💡", link: "https://www.amazon.com.br/dp/B0BKTDD9NB?tag=flirtspark09-20" },
-  { name: "Rose and Candle Gift Box 🎁", link: "https://www.amazon.com.br/dp/B0DR32GHVS?tag=flirtspark09-20" }
-];
-
+  const affiliateProducts = window.affiliateProducts || [];
   let carouselIndex = 0;
 
+  function sanitizeText(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
   function updateCarousel() {
-    if (!carousel) return;
+    if (!carousel || !affiliateProducts.length) return;
     const product = affiliateProducts[carouselIndex];
-    carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
+    if (!product || !product.link || !product.names) return;
+
+    const name = product.names[currentLang] || product.names['en-US'] || "Product";
+    carousel.innerHTML = `<a href="${encodeURI(product.link)}" target="_blank" rel="noopener">${sanitizeText(name)}</a>`;
     carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
   }
 
   function renderAffiliate() {
-    if (!affTitle) return;
     const titles = {
       'en-US': 'Surprise with a gift! 🎁',
       'pt-BR': 'Surpreenda com um presente! 🎁',
       'es-ES': '¡Sorprende con un regalo! 🎁'
     };
-    affTitle.textContent = titles[currentLang] || titles['en-US'];
+    if (affTitle) affTitle.textContent = titles[currentLang] || titles['en-US'];
   }
 
   function updateUI() {
@@ -76,8 +74,6 @@ const affiliateProducts = [
     if (btn) btn.textContent = t.generate;
     if (langLabel) langLabel.textContent = t.langLabel;
     if (commentEl) commentEl.textContent = '';
-    renderAffiliate();
-
     if (bmcText) {
       bmcText.textContent = {
         'en-US': 'Support us with a coffee ☕',
@@ -85,68 +81,69 @@ const affiliateProducts = [
         'es-ES': 'Apóyanos con un café ☕'
       }[currentLang] || 'Support us with a coffee ☕';
     }
+    renderAffiliate();
   }
 
   function loadLanguageData(langCode) {
-    const path = `${basePath}lines_${langCode.slice(0, 2)}.json`;
-
-    fetch(path)
+    const file = `${basePath}lines_${langCode.slice(0, 2)}.json`;
+    fetch(file)
       .then(res => {
-        if (!res.ok) throw new Error('Erro ao carregar: ' + path);
+        if (!res.ok) throw new Error(`Failed to load ${file}`);
         return res.json();
       })
       .then(data => {
-        linesArray = data.lines || [];
-        commentsArray = data.comments || [];
+        if (!data || !Array.isArray(data.lines)) throw new Error("Invalid JSON structure");
+        linesArray = data.lines;
+        commentsArray = Array.isArray(data.comments) ? data.comments : [""];
         updateUI();
-        updateCarousel();
-        setInterval(updateCarousel, 4000);
       })
       .catch(err => {
-        console.error("Erro ao carregar dados:", err);
-        linesArray = ["Error loading pickup lines."];
-        commentsArray = ["Oops!"];
+        console.warn("Language data error:", err.message);
+        linesArray = ["Oops! Couldn't load pickup lines."];
+        commentsArray = [""];
         updateUI();
-        updateCarousel();
-        setInterval(updateCarousel, 4000);
       });
   }
 
-  if (btn) {
-    btn.addEventListener('click', () => {
-      if (!linesArray.length) {
-        if (commentEl) commentEl.textContent = "Lines not loaded 😢";
-        return;
-      }
-      const line = linesArray[Math.floor(Math.random() * linesArray.length)];
-      const comment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
-      if (lineEl) lineEl.textContent = line;
-      if (commentEl) commentEl.textContent = comment;
-    });
+  function handleGenerateClick() {
+    if (!linesArray.length) {
+      if (commentEl) commentEl.textContent = "No lines available 😢";
+      return;
+    }
+    const line = linesArray[Math.floor(Math.random() * linesArray.length)];
+    const comment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
+    if (lineEl) lineEl.textContent = line;
+    if (commentEl) commentEl.textContent = comment;
   }
 
-  if (copyIcon) {
-    copyIcon.addEventListener('click', () => {
-      const text = lineEl?.textContent;
-      if (!text) return;
+  function copyText(text) {
+    if (!text) return;
+    if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(text)
-        .then(() => commentEl.textContent = "Copied! ✅")
-        .catch(() => commentEl.textContent = "Copy failed 😢");
-      setTimeout(() => commentEl.textContent = "", 1500);
-    });
+        .then(() => commentEl && (commentEl.textContent = "Copied! ✅"))
+        .catch(() => commentEl && (commentEl.textContent = "Copy failed 😢"));
+    }
+    setTimeout(() => commentEl && (commentEl.textContent = ""), 1500);
   }
 
-  if (shareIcon) {
-    shareIcon.addEventListener('click', () => {
-      const text = lineEl?.textContent;
-      const url = window.location.href;
-      if (!text) return;
-      if (navigator.share) {
-        navigator.share({ title: 'Cheesy or Not?', text, url }).catch(() => {});
-      } else {
-        const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}`;
-        window.open(shareURL, '_blank', 'noopener');
-      }
+  function shareText(text) {
+    const url = window.location.href;
+    if (navigator.share) {
+      navigator.share({ title: 'Cheesy or Not?', text, url }).catch(() => {});
+    } else {
+      const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}`;
+      window.open(shareURL, '_blank', 'noopener');
+    }
+  }
+
+  if (btn) btn.addEventListener('click', handleGenerateClick);
+  if (copyIcon) copyIcon.addEventListener('click', () => copyText(lineEl?.textContent));
+  if (shareIcon) shareIcon.addEventListener('click', () => shareText(lineEl?.textContent || ""));
+
+  if (select) {
+    select.addEventListener('change', () => {
+      currentLang = select.value;
+      loadLanguageData(currentLang);
     });
   }
 
@@ -156,5 +153,8 @@ const affiliateProducts = [
 
   if (select) select.value = browserLang;
   currentLang = browserLang;
+
   loadLanguageData(currentLang);
+  updateCarousel();
+  setInterval(updateCarousel, 4000);
 });
