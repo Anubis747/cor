@@ -98,15 +98,25 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function updateUI() {
-    const t = translations[currentLang] || translations['en-US'];
-    introEl.textContent = t.intro;
-    lineEl.textContent = t.initial;
-    btn.textContent = t.generate;
-    langLabel.textContent = t.langLabel;
-    commentEl.textContent = '';
-    renderAffiliate();
+function updateUI() {
+  const t = translations[currentLang] || translations['en-US'];
+  introEl.textContent = t.intro;
+  lineEl.textContent = t.initial;
+  btn.textContent = t.generate;
+  langLabel.textContent = t.langLabel;
+  commentEl.textContent = '';
+  renderAffiliate();
+
+  // Atualiza texto do Buy Me a Coffee, se o elemento existir
+  const bmcText = document.getElementById('bmcText');
+  if (bmcText) {
+    bmcText.textContent = {
+      'en-US': 'Support us with a coffee ☕',
+      'pt-BR': 'Nos apoie com um café ☕',
+      'es-ES': 'Apóyanos con un café ☕'
+    }[currentLang] || 'Support us with a coffee ☕';
   }
+}
 
   btn.addEventListener('click', () => {
     if (linesArray.length === 0) return;
