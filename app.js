@@ -1,6 +1,7 @@
-// data for lines, comments, affiliate
 const data = {
   'en-US': {
+    intro:  "Click the button to generate a cheesy pick‑up line and share it!",
+    generate: "Generate",
     lines: [
       "Are you a magician? Because whenever I look at you, everyone else disappears. ✨",
       "Do you have a name, or can I call you mine? 💌",
@@ -9,11 +10,13 @@ const data = {
     comments: ["You nailed it! 🔥","That’s fire! 🚀","Smooth move! 😉"],
     affTitle: "Surprise with a gift! 🎁",
     offers: [
-      { title: "Bouquet of Flowers", img:"flower.jpg", link:"https://amzn.to/BR_FLOWER" },
-      { title: "Box of Chocolates", img:"choco.jpg", link:"https://amzn.to/BR_CHOCOLATE" }
+      { title: "Bouquet of Flowers", img:"flower.jpg", link:"https://amzn.to/US_FLOWER" },
+      { title: "Box of Chocolates", img:"choco.jpg", link:"https://amzn.to/US_CHOCOLATE" }
     ]
   },
   'pt-BR': {
+    intro:  "Clique no botão para gerar uma cantada divertida e compartilhe!",
+    generate: "Generate",
     lines: [
       "Você acredita em amor à primeira vista ou devo passar de novo? 👀",
       "Seu pai é padeiro? Porque você é um sonho! 🥐",
@@ -27,6 +30,8 @@ const data = {
     ]
   },
   'es-ES': {
+    intro:  "¡Haz clic para generar una frase divertida y compártela!",
+    generate: "Generate",
     lines: [
       "¿Eres un mago? Porque cada vez que te veo, desaparece todo lo demás. ✨",
       "¿Tienes nombre o puedo llamarte mío? 💌",
@@ -42,29 +47,37 @@ const data = {
 };
 
 // elements
-const lineEl    = document.getElementById('line');
-const commentEl = document.getElementById('comment');
-const btn       = document.getElementById('generate');
-const offersEl  = document.getElementById('offers');
-const affSection= document.getElementById('affiliate');
-const affTitle  = document.getElementById('affTitle');
-const select    = document.getElementById('langSelect');
-const langLabel = document.getElementById('langLabel');
+const introEl    = document.getElementById('intro');
+const lineEl     = document.getElementById('line');
+const btn        = document.getElementById('generate');
+const commentEl  = document.getElementById('comment');
+const offersEl   = document.getElementById('offers');
+const affSection = document.getElementById('affiliate');
+const affTitle   = document.getElementById('affTitle');
+const select     = document.getElementById('langSelect');
+const langLabel  = document.getElementById('langLabel');
 
 // detect browser locale
 let currentLoc = navigator.language;
-if (!data[currentLoc]) currentLoc = 'en-US';
+if (!data[currentLoc]) {
+  if (currentLoc.startsWith('pt')) currentLoc = 'pt-BR';
+  else if (currentLoc.startsWith('es')) currentLoc = 'es-ES';
+  else currentLoc = 'en-US';
+}
 
 // initialize dropdown
 select.value = currentLoc;
 
-// render affiliate offers (all, will hide later if needed)
+// render affiliate offers
 function renderOffers() {
   offersEl.innerHTML = '';
   data[currentLoc].offers.forEach(item => {
     const div = document.createElement('div');
     div.className = 'offer';
-    div.innerHTML = `<img src="${item.img}" alt=""><a href="${item.link}" target="_blank">${item.title}</a>`;
+    div.innerHTML = `
+      <img src="${item.img}" alt="">
+      <a href="${item.link}" target="_blank">${item.title}</a>
+    `;
     offersEl.appendChild(div);
   });
 }
@@ -72,15 +85,12 @@ function renderOffers() {
 // update UI texts & affiliate visibility
 function updateUI() {
   const cfg = data[currentLoc];
-  langLabel.textContent = {
-    'en-US':'Choose another language:',
-    'pt-BR':'Escolha outro idioma:',
-    'es-ES':'Elige otro idioma:'
-  }[currentLoc];
-  select.value = currentLoc;
-  affTitle.textContent = cfg.affTitle;
+  introEl.textContent    = cfg.intro;
+  btn.textContent        = cfg.generate;
+  langLabel.textContent  = "Choose another language:";
+  select.value           = currentLoc;
+  affTitle.textContent   = cfg.affTitle;
   renderOffers();
-  // show affiliate only for BR or US
   affSection.style.display = (currentLoc==='pt-BR' || currentLoc==='en-US') ? 'block' : 'none';
 }
 
@@ -89,7 +99,7 @@ btn.addEventListener('click', () => {
   const cfg = data[currentLoc];
   const line = cfg.lines[Math.floor(Math.random()*cfg.lines.length)];
   const comm = cfg.comments[Math.floor(Math.random()*cfg.comments.length)];
-  lineEl.textContent = line;
+  lineEl.textContent    = line;
   commentEl.textContent = comm;
 });
 
