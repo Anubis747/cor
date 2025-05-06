@@ -51,12 +51,12 @@ window.addEventListener('DOMContentLoaded', () => {
   let carouselIndex = 0;
 
   function updateCarousel() {
-    const product = affiliateProducts[carouselIndex];
-    if (carousel) {
-      carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
-      carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
-    }
+  const product = affiliateProducts[carouselIndex];
+  if (carousel && product) {
+    carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
+    carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
   }
+}
 
   function loadLanguageData(langCode) {
     fetch(`${basePath}lines_${langCode.slice(0, 2)}.json`)
@@ -75,14 +75,15 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderAffiliate() {
-    const titles = {
-      'en-US': 'Surprise with a gift! 🎁',
-      'pt-BR': 'Surpreenda com um presente! 🎁',
-      'es-ES': '¡Sorprende con un regalo! 🎁'
-    };
-    if (affTitle) affTitle.textContent = titles[currentLang] || titles['en-US'];
+  const titles = {
+    'en-US': 'Surprise with a gift! 🎁',
+    'pt-BR': 'Surpreenda com um presente! 🎁',
+    'es-ES': '¡Sorprende con un regalo! 🎁'
+  };
+  if (affTitle) {
+    affTitle.textContent = titles[currentLang] || titles['en-US'];
   }
-
+}
   function updateUI() {
     const t = translations[currentLang] || translations['en-US'];
     introEl.textContent   = t.intro;
