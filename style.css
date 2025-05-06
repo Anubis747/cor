@@ -12,7 +12,8 @@ main {
   text-align: center;
 }
 
-.card, .affiliate {
+.card,
+.affiliate {
   background: #ffffff;
   padding: 1.5rem;
   border-radius: 10px;
@@ -38,6 +39,7 @@ button {
   color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 button:hover {
@@ -50,23 +52,7 @@ button:hover {
   font-style: italic;
 }
 
-.lang-switch {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-/* NOVOS ESTILOS PARA PLACEHOLDERS */
-
-.ad-placeholder, .coffee-placeholder {
-  background-color: #eaeaea;
-  color: #555;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 1rem auto;
-  font-size: 0.85rem;
-  text-align: center;
-  border: 1px dashed #bbb;
-}
+/* Copy & Share icons */
 .icon-actions {
   margin-top: 15px;
   display: flex;
@@ -84,29 +70,33 @@ button:hover {
 .icon-actions i:hover {
   color: #ff4757;
 }
-.bmc-container {
-  margin: 2rem auto;
-  text-align: center;
+
+/* Language selector */
+.lang-switch {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
 }
 
-.bmc-text {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.bmc-button {
-  max-width: 220px;
-  height: auto;
-}
+/* Ads and BuyMeACoffee placeholders */
+.ad-placeholder,
 .coffee-placeholder {
+  background-color: #eaeaea;
+  color: #555;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 1.5rem auto;
+  font-size: 0.85rem;
   text-align: center;
-  margin: 1.5rem 0;
+  border: 1px dashed #bbb;
 }
+
 .coffee-placeholder p {
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
-
-
+/* Optional: limit BMC button size */
+.coffee-placeholder img {
+  max-width: 220px;
+  height: auto;
+}
