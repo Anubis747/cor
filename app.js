@@ -122,8 +122,7 @@ function copyText(text) {
     return ok ? Promise.resolve() : Promise.reject();
   }
 }
-
-// Eventos para ícones
+// Eventos para ícones (corrigido, robusto e com logs)
 const copyIcon = document.getElementById('copyIcon');
 const shareIcon = document.getElementById('shareIcon');
 
@@ -136,6 +135,8 @@ if (copyIcon) {
       .catch(() => { commentEl.textContent = "Copy failed 😢"; });
     setTimeout(() => commentEl.textContent = "", 1500);
   });
+} else {
+  console.error('copyIcon não encontrado no HTML');
 }
 
 if (shareIcon) {
@@ -152,5 +153,6 @@ if (shareIcon) {
       window.open(shareURL, '_blank', 'noopener');
     }
   });
+} else {
+  console.error('shareIcon não encontrado no HTML');
 }
-
