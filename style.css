@@ -11,9 +11,6 @@ main {
   max-width: 360px;
   text-align: center;
 }
-h1 {
-  margin-bottom: 0.5rem;
-}
 .intro {
   font-size: 0.9rem;
   color: #555;
@@ -25,6 +22,7 @@ h1 {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 1rem;
   margin-bottom: 1.5rem;
+  text-align: center; /* garante centralização interna */
 }
 .line {
   font-size: 1.1rem;
@@ -40,8 +38,8 @@ button {
   font-size: 1rem;
   padding: 0.6rem 1.2rem;
   transition: background 0.2s;
-  display: inline-block;
-  margin: 0.6rem auto;
+  display: block;      /* torna block para margin auto funcionar */
+  margin: 0.6rem auto; /* centraliza horizontalmente */
 }
 button:hover {
   background: #ff4757;
