@@ -107,15 +107,14 @@ function updateUI() {
   commentEl.textContent = '';
   renderAffiliate();
 
-  // Atualiza texto do Buy Me a Coffee, se o elemento existir
   const bmcText = document.getElementById('bmcText');
-  if (bmcText) {
-    bmcText.textContent = {
-      'en-US': 'Support us with a coffee ☕',
-      'pt-BR': 'Nos apoie com um café ☕',
-      'es-ES': 'Apóyanos con un café ☕'
-    }[currentLang] || 'Support us with a coffee ☕';
-  }
+if (bmcText) {
+  bmcText.textContent = {
+    'en-US': 'Support us with a coffee ☕',
+    'pt-BR': 'Nos apoie com um café ☕',
+    'es-ES': 'Apóyanos con un café ☕'
+  }[currentLang] || 'Support us with a coffee ☕';
+ }
 }
 
   btn.addEventListener('click', () => {
