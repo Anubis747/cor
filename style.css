@@ -12,22 +12,22 @@ main {
   text-align: center;
 }
 
+.card, .affiliate {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+}
+
 .intro {
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   color: #666;
 }
 
-#card, .affiliate {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  margin-bottom: 1rem;
-}
-
 .line {
-  min-height: 40px;
-  font-size: 1.1rem;
+  min-height: 2em;
+  font-size: 1.2rem;
   margin: 1rem 0;
 }
 
@@ -35,7 +35,7 @@ button {
   padding: 10px 20px;
   border: none;
   background-color: #ff6b81;
-  color: white;
+  color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
 }
