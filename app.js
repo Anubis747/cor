@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateUI() {
     const t = translations[currentLang] || translations['en-US'];
     if (introEl) introEl.textContent = t.intro;
-    ilineEl) lineEl.textContent = t.initial;
+    if (copyIcon) copyIcon.addEventListener('click', () => copyText(lineEl?.textContent));
     if (btn) btn.textContent = t.generate;
     if (langLabel) langLabel.textContent = t.langLabel;
     if (commentEl) commentEl.textContent = '';
