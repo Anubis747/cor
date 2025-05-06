@@ -51,8 +51,6 @@ const data = {
     langLabel: "Elige otro idioma:"
   }
 };
-
-// grab elements
 const introEl    = document.getElementById('intro');
 const lineEl     = document.getElementById('line');
 const btn        = document.getElementById('generate');
@@ -63,7 +61,7 @@ const affTitle   = document.getElementById('affTitle');
 const select     = document.getElementById('langSelect');
 const langLabel  = document.getElementById('langLabel');
 
-// detect browser locale
+// detect browser locale and fall back if needed
 let loc = navigator.language;
 if (!data[loc]) {
   if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -87,7 +85,7 @@ function renderOffers() {
   });
 }
 
-// update UI
+// update all UI text
 function updateUI() {
   const cfg = data[currentLoc];
   introEl.textContent    = cfg.intro;
@@ -101,7 +99,7 @@ function updateUI() {
   affSection.style.display = (currentLoc==='pt-BR' || currentLoc==='en-US') ? 'block' : 'none';
 }
 
-// generate line + comment
+// on click generate
 btn.addEventListener('click', () => {
   const cfg = data[currentLoc];
   const line = cfg.lines[Math.floor(Math.random()*cfg.lines.length)];
@@ -110,7 +108,7 @@ btn.addEventListener('click', () => {
   commentEl.textContent = comm;
 });
 
-// language switch
+// on language change
 select.addEventListener('change', e => {
   currentLoc = e.target.value;
   updateUI();
