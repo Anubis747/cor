@@ -1,7 +1,7 @@
 const data = {
   'en-US': {
     initial:  "Ready for a pick‑up line?",
-    intro:    "Click the button to generate a cheesy pick‑up line and share it!",
+    intro:    "Click the button to get a cheesy pick‑up line and share it!",
     generate: "Generate",
     lines: [
       "Are you a magician? Because whenever I look at you, everyone else disappears. ✨",
@@ -17,13 +17,13 @@ const data = {
     langLabel: "Choose another language:"
   },
   'pt-BR': {
-    initial:  "Vamos gerar uma cantada?",
+    initial:  "Pronto para uma cantada divertida?",
     intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
     generate: "Generate",
     lines: [
-      "Você acredita em amor à primeira vista ou devo passar de novo? 👀",
-      "Seu pai é padeiro? Porque você é um sonho! 🥐",
-      "Você é Wi‑Fi? Porque estou sentindo conexão. 📶"
+      "Você é Wi‑Fi? Porque estou sentindo conexão. 📶",
+      "Seu sorriso ilumina mais que o sol nascente. ☀️",
+      "Se beleza fosse música, você seria uma sinfonia. 🎶"
     ],
     comments: ["Arrasou!! 🔥","Ai sim você vai longe! 🚀","Mandou bem! 😉"],
     affTitle: "Surpreenda com um presente! 🎁",
@@ -34,13 +34,13 @@ const data = {
     langLabel: "Escolha outro idioma:"
   },
   'es-ES': {
-    initial:  "¡Hora de una frase divertida!",
-    intro:    "¡Haz clic para generar una frase divertida y compártela!",
+    initial:  "¡Hora de una cantada divertida!",
+    intro:    "¡Haz clic para generar una cantada divertida y compártela!",
     generate: "Generate",
     lines: [
-      "¿Eres un mago? Porque cada vez que te veo, desaparece todo lo demás. ✨",
-      "¿Tienes nombre o puedo llamarte mío? 💌",
-      "¿Tu papá es boxeador? ¡Porque eres un nocaut! 🥊"
+      "¿Eres un imán? Porque me atraes como nada más. 🧲",
+      "Si la belleza fuera tiempo, tú serías la eternidad. ⌛️",
+      "¿Eres una estrella? Porque iluminas mi noche. ⭐️"
     ],
     comments: ["¡Buenísimo! 🔥","¡Eso fue genial! 🚀","¡Qué smooth! 😉"],
     affTitle: "¡Sorprende con un regalo! 🎁",
@@ -51,6 +51,8 @@ const data = {
     langLabel: "Elige otro idioma:"
   }
 };
+
+// grab elements
 const introEl    = document.getElementById('intro');
 const lineEl     = document.getElementById('line');
 const btn        = document.getElementById('generate');
@@ -60,44 +62,60 @@ const affSection = document.getElementById('affiliate');
 const affTitle   = document.getElementById('affTitle');
 const select     = document.getElementById('langSelect');
 const langLabel  = document.getElementById('langLabel');
-const copyBtn  = document.getElementById('copyBtn');
-const shareBtn = document.getElementById('shareBtn');
+const copyBtn    = document.getElementById('copyBtn');
+const shareBtn   = document.getElementById('shareBtn');
 
-// Copy to clipboard
+if (!introEl || !lineEl || !btn || !commentEl || !copyBtn || !shareBtn) {
+  console.error("One or more UI elements not found", { introEl, lineEl, btn, commentEl, copyBtn, shareBtn });
+}
+
+// copy with fallback
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  // fallback
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly','');
+  ta.style.position = 'absolute';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  const ok = document.execCommand('copy');
+  document.body.removeChild(ta);
+  return ok ? Promise.resolve() : Promise.reject();
+}
+
 copyBtn.addEventListener('click', () => {
   const text = lineEl.textContent;
   if (!text) return;
-  navigator.clipboard.writeText(text)
+  copyText(text)
     .then(() => {
       commentEl.textContent = "Copied! ✅";
       setTimeout(() => commentEl.textContent = "", 1500);
     })
-    .catch(() => {
+    .catch(err => {
+      console.error("Copy failed", err);
       commentEl.textContent = "Copy failed 😢";
       setTimeout(() => commentEl.textContent = "", 1500);
     });
 });
 
-// Share via Web Share API or Twitter fallback
 shareBtn.addEventListener('click', () => {
   const text = lineEl.textContent;
   const url  = window.location.href;
+  if (!text) return;
   if (navigator.share) {
-    navigator.share({
-      title: 'Cheesy or Not?',
-      text,
-      url
-    }).catch(() => {});
+    navigator.share({ title: 'Cheesy or Not?', text, url })
+      .catch(err => console.error("Web share failed", err));
   } else {
-    // fallback: open Twitter intent
-    const shareUrl = 
-      'https://twitter.com/intent/tweet?text='
-      + encodeURIComponent(text + ' ' + url);
+    const shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url);
     window.open(shareUrl, '_blank', 'noopener');
   }
 });
 
-// detect browser locale and fall back if needed
+// locale detection
 let loc = navigator.language;
 if (!data[loc]) {
   if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -105,7 +123,7 @@ if (!data[loc]) {
   else loc = 'en-US';
 }
 let currentLoc = loc;
-select.value  = currentLoc;
+select.value = currentLoc;
 
 // render affiliate offers
 function renderOffers() {
@@ -113,15 +131,12 @@ function renderOffers() {
   data[currentLoc].offers.forEach(item => {
     const div = document.createElement('div');
     div.className = 'offer';
-    div.innerHTML = `
-      <img src="${item.img}" alt="${item.title}">
-      <a href="${item.link}" target="_blank">${item.title}</a>
-    `;
+    div.innerHTML = `<img src="${item.img}" alt=""><a href="${item.link}" target="_blank">${item.title}</a>`;
     offersEl.appendChild(div);
   });
 }
 
-// update all UI text
+// update UI
 function updateUI() {
   const cfg = data[currentLoc];
   introEl.textContent    = cfg.intro;
@@ -135,7 +150,7 @@ function updateUI() {
   affSection.style.display = (currentLoc==='pt-BR' || currentLoc==='en-US') ? 'block' : 'none';
 }
 
-// on click generate
+// generate line + comment
 btn.addEventListener('click', () => {
   const cfg = data[currentLoc];
   const line = cfg.lines[Math.floor(Math.random()*cfg.lines.length)];
@@ -144,7 +159,7 @@ btn.addEventListener('click', () => {
   commentEl.textContent = comm;
 });
 
-// on language change
+// language change
 select.addEventListener('change', e => {
   currentLoc = e.target.value;
   updateUI();
