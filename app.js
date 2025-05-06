@@ -60,6 +60,42 @@ const affSection = document.getElementById('affiliate');
 const affTitle   = document.getElementById('affTitle');
 const select     = document.getElementById('langSelect');
 const langLabel  = document.getElementById('langLabel');
+const copyBtn  = document.getElementById('copyBtn');
+const shareBtn = document.getElementById('shareBtn');
+
+// Copy to clipboard
+copyBtn.addEventListener('click', () => {
+  const text = lineEl.textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      commentEl.textContent = "Copied! ✅";
+      setTimeout(() => commentEl.textContent = "", 1500);
+    })
+    .catch(() => {
+      commentEl.textContent = "Copy failed 😢";
+      setTimeout(() => commentEl.textContent = "", 1500);
+    });
+});
+
+// Share via Web Share API or Twitter fallback
+shareBtn.addEventListener('click', () => {
+  const text = lineEl.textContent;
+  const url  = window.location.href;
+  if (navigator.share) {
+    navigator.share({
+      title: 'Cheesy or Not?',
+      text,
+      url
+    }).catch(() => {});
+  } else {
+    // fallback: open Twitter intent
+    const shareUrl = 
+      'https://twitter.com/intent/tweet?text='
+      + encodeURIComponent(text + ' ' + url);
+    window.open(shareUrl, '_blank', 'noopener');
+  }
+});
 
 // detect browser locale and fall back if needed
 let loc = navigator.language;
