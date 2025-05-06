@@ -20,6 +20,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const affiliateProductsBR = [
+    { names: { 'pt-BR': "Grânulo Inox para Pulseira 🔩" }, link: "https://s.click.aliexpress.com/e/_oDHmV6B" },
+    { names: { 'pt-BR': "Anel Zircônia Noiva 💍" }, link: "https://s.click.aliexpress.com/e/_opfjyqx" },
+    { names: { 'pt-BR': "Anel Moissanite Ouro 14K ✨" }, link: "https://s.click.aliexpress.com/e/_opABgdD" },
+    { names: { 'pt-BR': "Anel Redondo Moissanite 💎" }, link: "https://s.click.aliexpress.com/e/_omVrpM3" },
+    { names: { 'pt-BR': "Anel 4.3ct Moissanite 💖" }, link: "https://s.click.aliexpress.com/e/_onzmT6n" },
+    { names: { 'pt-BR': "Brincos Pérola Elegantes 🌟" }, link: "https://s.click.aliexpress.com/e/_oEHWhyx" },
+    { names: { 'pt-BR': "Broche Estrela Brasil 🇧🇷" }, link: "https://s.click.aliexpress.com/e/_okgRZVH" },
+    { names: { 'pt-BR': "Aliança Moissanite 4mm 💍" }, link: "https://s.click.aliexp/e/_oBYwwun" },
+    { names: { 'pt-BR': "Camisola com Corações 💕" }, link: "https://s.click.aliexpress.com/e/_olcrcwj" },
+    { names: { 'pt-BR': "Sutiã de Renda Feminino 🖤" }, link: "https://s.click.aliexpress.com/e/_oCOV6eT" },
+    { names: { 'pt-BR': "Conjunto de Veludo Feminino ❄️" }, link: "https://s.click.aliexpress.com/e/_oBj0fZz" },
+    { names: { 'pt-BR': "Calcinha de Cetim Sem Costura 👙" }, link: "https://s.click.aliexpress.com/e/_ooM7v9d" },
+    { names: { 'pt-BR': "Cuecas Boxer Masculinas 🩳" }, link: "https://s.click.aliexpress.com/e/_oDaPjd9" },
+    { names: { 'pt-BR': "Escultura Mãos de Amor 🖐️❤️" }, link: "https://s.click.aliexpress.com/e/_omkoVt5" },
+    { names: { 'pt-BR': "Token Abraço no Bolso 🤗" }, link: "https://s.click.aliexpress.com/e/_okSWqUJ" },
+    { names: { 'pt-BR': "Forma Silicone Coração/Vela ❤️" }, link: "https://s.click.aliexpress.com/e/_oFHvQ8n" },
+    { names: { 'pt-BR': "Caixa de Presente Floral 🌹" }, link: "https://s.click.aliexpress.com/e/_ong3THz" },
+    { names: { 'pt-BR': "Dados do Amor para Casais 🎲" }, link: "https://s.click.aliexpress.com/e/_oD94zp5" },
+    { names: { 'pt-BR': "Blocos Rosa 3D Casamento 💐" }, link: "https://s.click.aliexpress.com/e/_opNjHWr" },
+    { names: { 'pt-BR': "Broche Anjo do Amor 😇" }, link: "https://s.click.aliexpress.com/e/_oFMNPu3" },
+    { names: { 'pt-BR': "Colar Coração Duplo 💕" }, link: "https://s.click.aliexpress.com/e/_oDKU2uP" },
+    { names: { 'pt-BR': "Buquê de Sabonete Romântico 💐" }, link: "https://s.click.al/e/_ol9FWiF" },
+    { names: { 'pt-BR': "Molde de Urso para Vela 🧸" }, link: "https://s.click.aliexpres.com/e/_omW1LxZ" },
+    { names: { 'pt-BR': "Molde de Vela Coração Peônia 🕯️" }, link: "https://s.click.aliexpress.com/e/_oE4gzJh" },
+    { name: { 'pt-BR': "Camiseta 'Esposa Incrível' 👕" }, link: "https://s.click.aliexpress.com/e/_opS9mDt" }
+  ];
+
   const $ = id => document.getElementById(id);
 
   const introEl    = $('intro');
@@ -27,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn        = $('generate');
   const commentEl  = $('comment');
   const select     = $('langSelect');
-  const langLabel  = $('langLabel');
+  const langLabe  = $('langLabel');
   const affTitle   = $('affTitle');
   const carousel   = $('carousel');
   const bmcText    = $('bmcText');
@@ -39,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let commentsArray = [];
   let currentLang = select?.value || 'en-US';
 
-  const affiliateProducts = window.affiliateProducts || [];
+  let affiliateProducts = [];
+
   let carouselIndex = 0;
 
   function sanitizeText(text) {
@@ -53,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const product = affiliateProducts[carouselIndex];
     if (!product || !product.link || !product.names) return;
 
-    const name = product.names[currentLang] || product.names['en-US'] || "Product";
+    const name = product.names[currentLang] || product.names['pt-BR'] || "Produto";
     carousel.innerHTML = `<a href="${encodeURI(product.link)}" target="_blank" rel="noopener">${sanitizeText(name)}</a>`;
     carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
   }
@@ -70,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateUI() {
     const t = translations[currentLang] || translations['en-US'];
     if (introEl) introEl.textContent = t.intro;
-    if (lineEl) lineEl.textContent = t.initial;
+    ilineEl) lineEl.textContent = t.initial;
     if (btn) btn.textContent = t.generate;
     if (langLabel) langLabel.textContent = t.langLabel;
     if (commentEl) commentEl.textContent = '';
@@ -110,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (commentEl) commentEl.textContent = "No lines available 😢";
       return;
     }
-    const line = linesArray[Math.floor(Math.random() * linesArray.length)];
+   const line = linesArray[Math.floor(Math.random() * linesArray.length)];
     const comment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
     if (lineEl) lineEl.textContent = line;
     if (commentEl) commentEl.textContent = comment;
@@ -130,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const url = window.location.href;
     if (navigator.share) {
       navigator.share({ title: 'Cheesy or Not?', text, url }).catch(() => {});
-    } else {
+   } else {
       const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}`;
       window.open(shareURL, '_blank', 'noopener');
     }
@@ -143,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (select) {
     select.addEventListener('change', () => {
       currentLang = select.value;
+      affiliateProducts = currentLang === 'pt-BR' ? affiliateProductsBR : [];
       loadLanguageData(currentLang);
     });
   }
@@ -153,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (select) select.value = browserLang;
   currentLang = browserLang;
+  affiliateProducts = currentLang === 'pt-BR' ? affiliateProductsBR : [];
 
   loadLanguageData(currentLang);
   updateCarousel();
