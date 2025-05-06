@@ -19,7 +19,7 @@ const data = {
   'pt-BR': {
     initial:  "Pronto para uma cantada divertida?",
     intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
-    generate: "Gerar Cantada",
+    generate: "Generate",
     lines: [
       "Você é Wi‑Fi? Porque estou sentindo conexão. 📶",
       "Seu sorriso ilumina mais que o sol nascente. ☀️",
@@ -36,7 +36,7 @@ const data = {
   'es-ES': {
     initial:  "¿Listo para una cantada divertida?",
     intro:    "¡Haz clic para ver una cantada divertida y compártela!",
-    generate: "Generar Frase",
+    generate: "Generate",
     lines: [
       "¿Eres un imán? Porque me atraes como nada más. 🧲",
       "Si la belleza fuera tiempo, tú serías la eternidad. ⌛️",
@@ -52,6 +52,7 @@ const data = {
   }
 };
 
+// elementos
 const introEl    = document.getElementById('intro');
 const lineEl     = document.getElementById('line');
 const btn        = document.getElementById('generate');
@@ -64,6 +65,7 @@ const langLabel  = document.getElementById('langLabel');
 const copyIcon   = document.getElementById('copyIcon');
 const shareIcon  = document.getElementById('shareIcon');
 
+// Função de cópia com fallback
 function copyText(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     return navigator.clipboard.writeText(text);
@@ -80,6 +82,7 @@ function copyText(text) {
   return ok ? Promise.resolve() : Promise.reject();
 }
 
+// eventos de copy/share
 copyIcon.addEventListener('click', () => {
   const text = lineEl.textContent;
   if (!text) return;
@@ -93,7 +96,6 @@ copyIcon.addEventListener('click', () => {
       setTimeout(() => commentEl.textContent = "", 1500);
     });
 });
-
 shareIcon.addEventListener('click', () => {
   const text = lineEl.textContent;
   const url  = window.location.href;
@@ -108,6 +110,7 @@ shareIcon.addEventListener('click', () => {
   }
 });
 
+// detecta locale
 let loc = navigator.language;
 if (!data[loc]) {
   if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -117,6 +120,7 @@ if (!data[loc]) {
 let currentLoc = loc;
 select.value  = currentLoc;
 
+// render ofertas
 function renderOffers() {
   offersEl.innerHTML = '';
   data[currentLoc].offers.forEach(item => {
@@ -127,6 +131,7 @@ function renderOffers() {
   });
 }
 
+// atualiza UI
 function updateUI() {
   const cfg = data[currentLoc];
   introEl.textContent    = cfg.intro;
@@ -140,6 +145,7 @@ function updateUI() {
   affSection.style.display = (currentLoc==='pt-BR' || currentLoc==='en-US') ? 'block' : 'none';
 }
 
+// gerar frase
 btn.addEventListener('click', () => {
   const cfg = data[currentLoc];
   const line = cfg.lines[Math.floor(Math.random()*cfg.lines.length)];
@@ -147,10 +153,10 @@ btn.addEventListener('click', () => {
   lineEl.textContent    = line;
   commentEl.textContent = comm;
 });
-
+// troca idioma
 select.addEventListener('change', e => {
   currentLoc = e.target.value;
   updateUI();
 });
-
+// render inicial
 updateUI();
