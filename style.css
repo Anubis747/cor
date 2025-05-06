@@ -83,4 +83,28 @@ label, select {
   padding: 0.4rem 1rem;
   font-size: 0.9rem;
 }
+.card-header {
+  position: relative;
+  padding-right: 2rem;            /* espaço para os ícones */
+}
+.icon-actions {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  opacity: 0;                     /* invisível por padrão */
+  transition: opacity 0.2s;
+  display: flex;
+  gap: 0.5rem;
+}
+.card:hover .icon-actions {
+  opacity: 0.6;                   /* aparece ao passar o mouse */
+}
+.icon-actions i {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.icon-actions i:hover {
+  opacity: 1;
+}
+
 
