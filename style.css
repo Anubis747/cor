@@ -23,10 +23,30 @@ main {
   padding: 1rem;
   margin-bottom: 1.5rem;
 }
+.card-header {
+  position: relative;
+  padding-right: 2rem;
+}
 .line {
   font-size: 1.1rem;
   min-height: 3em;
   margin: 1rem 0;
+}
+.icon-actions {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  display: flex;
+  gap: 0.5rem;
+}
+.card:hover .icon-actions {
+  opacity: 0.6;
+}
+.icon-actions i {
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 button {
   background: #ff6b6b;
@@ -73,38 +93,3 @@ button:hover {
 label, select {
   font-size: 0.9rem;
 }
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.actions button {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-}
-.card-header {
-  position: relative;
-  padding-right: 2rem;            /* espaço para os ícones */
-}
-.icon-actions {
-  position: absolute;
-  top: 0.2rem;
-  right: 0.2rem;
-  opacity: 0;                     /* invisível por padrão */
-  transition: opacity 0.2s;
-  display: flex;
-  gap: 0.5rem;
-}
-.card:hover .icon-actions {
-  opacity: 0.6;                   /* aparece ao passar o mouse */
-}
-.icon-actions i {
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.icon-actions i:hover {
-  opacity: 1;
-}
-
-
