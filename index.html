@@ -11,13 +11,13 @@
       <text y=%22.9em%22 font-size=%2280%22>❤️</text>
     </svg>">
 
-  <!-- FontAwesome (para ícones) -->
-  <link rel="stylesheet" 
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <main>
-    <!-- Top Google Ad Placeholder -->
+    <!-- Google Ad (top) -->
     <div class="ad-placeholder">Google Ad (Top)</div>
 
     <h1>Cheesy or Not? 🧀❤️</h1>
@@ -27,28 +27,41 @@
       <p id="line" class="line"></p>
       <button id="generate"></button>
       <p id="comment" class="comment"></p>
-      
-      <!-- Ícones Copiar e Compartilhar -->
+
+      <!-- Copy and Share icons -->
       <div class="icon-actions">
         <i class="fa-solid fa-copy" id="copyIcon" title="Copy"></i>
         <i class="fa-solid fa-share-alt" id="shareIcon" title="Share"></i>
       </div>
     </div>
 
+    <!-- Amazon affiliate section -->
     <section id="affiliate" class="affiliate" style="display: none;">
       <h2 id="affTitle"></h2>
       <div id="offers"></div>
     </section>
 
-    <!-- Buy Me a Coffee Placeholder -->
-<div class="coffee-placeholder">
-  <p id="bmcText">Support us with a coffee ☕</p>
-  <a href="https://www.buymeacoffee.com/liveordead" target="_blank" rel="noopener">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Support us!!&emoji=&slug=liveordead&button_colour=FF5F5F&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" alt="Buy Me a Coffee Button" />
-  </a>
-</div>
+    <!-- Buy Me a Coffee -->
+    <div class="coffee-placeholder">
+      <p id="bmcText">Support us with a coffee ☕</p>
+      <a href="https://www.buymeacoffee.com/liveordead" target="_blank" rel="noopener">
+        <img
+          src="https://img.buymeacoffee.com/button-api/?text=Support us!!&emoji=&slug=liveordead&button_colour=FF5F5F&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00"
+          alt="Buy Me a Coffee Button" />
+      </a>
+    </div>
 
-    <!-- Bottom Google Ad Placeholder -->
+    <!-- Language selector -->
+    <div class="lang-switch">
+      <label for="langSelect" id="langLabel">Choose another language:</label>
+      <select id="langSelect">
+        <option value="en-US">English</option>
+        <option value="pt-BR">Português</option>
+        <option value="es-ES">Español</option>
+      </select>
+    </div>
+
+    <!-- Google Ad (bottom) -->
     <div class="ad-placeholder">Google Ad (Bottom)</div>
   </main>
 
