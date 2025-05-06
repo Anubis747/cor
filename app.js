@@ -105,3 +105,52 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateUI();
 });
+
+// Função de copiar texto com fallback seguro
+function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    return navigator.clipboard.writeText(text);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok ? Promise.resolve() : Promise.reject();
+  }
+}
+
+// Eventos para ícones
+const copyIcon = document.getElementById('copyIcon');
+const shareIcon = document.getElementById('shareIcon');
+
+if (copyIcon) {
+  copyIcon.addEventListener('click', () => {
+    const text = lineEl.textContent;
+    if (!text) return;
+    copyText(text)
+      .then(() => { commentEl.textContent = "Copied! ✅"; })
+      .catch(() => { commentEl.textContent = "Copy failed 😢"; });
+    setTimeout(() => commentEl.textContent = "", 1500);
+  });
+}
+
+if (shareIcon) {
+  shareIcon.addEventListener('click', () => {
+    const text = lineEl.textContent;
+    const url = window.location.href;
+    if (!text) return;
+
+    if (navigator.share) {
+      navigator.share({ title: 'Cheesy or Not?', text: text, url: url })
+        .catch(() => {});
+    } else {
+      const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`;
+      window.open(shareURL, '_blank', 'noopener');
+    }
+  });
+}
+
