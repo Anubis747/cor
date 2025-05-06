@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', () => {
-
   const translations = {
     'en-US': {
       intro: "Click to generate a cheesy pick-up line!",
@@ -21,23 +20,43 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const introEl     = document.getElementById('intro');
-  const lineEl      = document.getElementById('line');
-  const btn         = document.getElementById('generate');
-  const commentEl   = document.getElementById('comment');
-  const select      = document.getElementById('langSelect'); // <-- define aqui primeiro
-  const langLabel   = document.getElementById('langLabel');
-  const affSection  = document.getElementById('affiliate');
-  const affTitle    = document.getElementById('affTitle');
-  const offersEl    = document.getElementById('offers');
-  const basePath    = window.location.pathname.replace(/\/[^/]*$/, '/');
+  const introEl    = document.getElementById('intro');
+  const lineEl     = document.getElementById('line');
+  const btn        = document.getElementById('generate');
+  const commentEl  = document.getElementById('comment');
+  const select     = document.getElementById('langSelect');
+  const langLabel  = document.getElementById('langLabel');
+  const affTitle   = document.getElementById('affTitle');
+  const carousel   = document.getElementById('carousel');
+  const bmcText    = document.getElementById('bmcText');
 
-  const bmcText     = document.getElementById('bmcText');
-
+  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
   let linesArray = [];
   let commentsArray = [];
-
   let currentLang = select?.value || 'en-US';
+
+  const affiliateProducts = [
+    { name: "Flower Bouquet 🌸", link: "https://www.amazon.com/dp/B07QK6C6HB?tag=flirtspark09-20" },
+    { name: "Chocolate Gift Box 🍫", link: "https://www.amazon.com/dp/B078H3T7R3?tag=flirtspark09-20" },
+    { name: "Romantic Candle 🕯️", link: "https://www.amazon.com/dp/B09G3HRMXY?tag=flirtspark09-20" },
+    { name: "Funny Love Mug ☕", link: "https://www.amazon.com/dp/B08QFFG8YZ?tag=flirtspark09-20" },
+    { name: "Date Night Card Game 🎴", link: "https://www.amazon.com/dp/B084ZHCZTZ?tag=flirtspark09-20" },
+    { name: "Neon Heart Light 💡", link: "https://www.amazon.com/dp/B08BLNNY6P?tag=flirtspark09-20" },
+    { name: "Love Coupons 💌", link: "https://www.amazon.com/dp/B078GQZ5ZG?tag=flirtspark09-20" },
+    { name: "Romantic Journal 📓", link: "https://www.amazon.com/dp/1646113751?tag=flirtspark09-20" },
+    { name: "Plush Bear with Heart 🧸", link: "https://www.amazon.com/dp/B00QH7NZ0E?tag=flirtspark09-20" },
+    { name: "Love Necklace 💖", link: "https://www.amazon.com/dp/B074N9FC6X?tag=flirtspark09-20" }
+  ];
+
+  let carouselIndex = 0;
+
+  function updateCarousel() {
+    const product = affiliateProducts[carouselIndex];
+    if (carousel) {
+      carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
+      carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
+    }
+  }
 
   function loadLanguageData(langCode) {
     fetch(`${basePath}lines_${langCode.slice(0, 2)}.json`)
@@ -56,48 +75,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderAffiliate() {
-    const affData = {
-      'en-US': {
-        title: 'Surprise with a gift! 🎁',
-        offers: [
-          { name: 'Bouquet of Flowers', link: 'https://amzn.to/US_FLOWER' },
-          { name: 'Box of Chocolates', link: 'https://amzn.to/US_CHOCOLATE' }
-        ]
-      },
-      'pt-BR': {
-        title: 'Surpreenda com um presente! 🎁',
-        offers: [
-          { name: 'Buquê de Flores', link: 'https://amzn.to/BR_FLOWER' },
-          { name: 'Caixa de Chocolates', link: 'https://amzn.to/BR_CHOCOLATE' }
-        ]
-      },
-      'es-ES': {
-        title: '¡Sorprende con un regalo! 🎁',
-        offers: [
-          { name: 'Ramo de Flores', link: 'https://amzn.to/ES_FLOWER' },
-          { name: 'Caja de Chocolates', link: 'https://amzn.to/ES_CHOCOLATE' }
-        ]
-      }
+    const titles = {
+      'en-US': 'Surprise with a gift! 🎁',
+      'pt-BR': 'Surpreenda com um presente! 🎁',
+      'es-ES': '¡Sorprende con un regalo! 🎁'
     };
-
-    const localeData = affData[currentLang];
-    if (!localeData) {
-      affSection.style.display = 'none';
-      return;
-    }
-
-    affSection.style.display = 'block';
-    affTitle.textContent = localeData.title;
-    offersEl.innerHTML = '';
-
-    localeData.offers.forEach(offer => {
-      const offerLink = document.createElement('a');
-      offerLink.href = offer.link;
-      offerLink.textContent = offer.name;
-      offerLink.target = '_blank';
-      offerLink.rel = 'noopener';
-      offersEl.appendChild(offerLink);
-    });
+    if (affTitle) affTitle.textContent = titles[currentLang] || titles['en-US'];
   }
 
   function updateUI() {
@@ -117,31 +100,9 @@ window.addEventListener('DOMContentLoaded', () => {
       }[currentLang] || 'Support us with a coffee ☕';
     }
   }
-  const carousel = document.getElementById('carousel');
 
-const affiliateProducts = [
-  { name: "Flower Bouquet 🌸", link: "https://www.amazon.com/dp/B07QK6C6HB?tag=flirtspark09-20" },
-  { name: "Chocolate Gift Box 🍫", link: "https://www.amazon.com/dp/B078H3T7R3?tag=flirtspark09-20" },
-  { name: "Romantic Candle 🕯️", link: "https://www.amazon.com/dp/B09G3HRMXY?tag=flirtspark09-20" },
-  { name: "Funny Love Mug ☕", link: "https://www.amazon.com/dp/B08QFFG8YZ?tag=flirtspark09-20" },
-  { name: "Date Night Card Game 🎴", link: "https://www.amazon.com/dp/B084ZHCZTZ?tag=flirtspark09-20" },
-  { name: "Neon Heart Light 💡", link: "https://www.amazon.com/dp/B08BLNNY6P?tag=flirtspark09-20" },
-  { name: "Love Coupons 💌", link: "https://www.amazon.com/dp/B078GQZ5ZG?tag=flirtspark09-20" },
-  { name: "Romantic Journal 📓", link: "https://www.amazon.com/dp/1646113751?tag=flirtspark09-20" },
-  { name: "Plush Bear with Heart 🧸", link: "https://www.amazon.com/dp/B00QH7NZ0E?tag=flirtspark09-20" },
-  { name: "Love Necklace 💖", link: "https://www.amazon.com/dp/B074N9FC6X?tag=flirtspark09-20" }
-];
-
-let carouselIndex = 0;
-
-function updateCarousel() {
-  const product = affiliateProducts[carouselIndex];
-  carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
-  carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
-}
-
-setInterval(updateCarousel, 4000);
-updateCarousel();
+  setInterval(updateCarousel, 4000);
+  updateCarousel();
 
   btn.addEventListener('click', () => {
     if (linesArray.length === 0) return;
@@ -202,7 +163,6 @@ updateCarousel();
     });
   }
 
-  // Detecta idioma do navegador no primeiro carregamento
   const browserLang = navigator.language.startsWith('pt') ? 'pt-BR'
                     : navigator.language.startsWith('es') ? 'es-ES'
                     : 'en-US';
@@ -210,5 +170,4 @@ updateCarousel();
   select.value = browserLang;
   currentLang  = browserLang;
   loadLanguageData(currentLang);
-
 });
