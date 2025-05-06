@@ -67,7 +67,50 @@ window.addEventListener('DOMContentLoaded', () => {
   let currentLang = navigator.language in data ? navigator.language : 'en-US';
   select.value = currentLang;
 
-  function renderAffiliate() { /* sua função atual */ }
+  function renderAffiliate() {
+  const affData = {
+    'en-US': {
+      title: 'Surprise with a gift! 🎁',
+      offers: [
+        { name: 'Bouquet of Flowers', link: '#' },
+        { name: 'Box of Chocolates', link: '#' }
+      ]
+    },
+    'pt-BR': {
+      title: 'Surpreenda com um presente! 🎁',
+      offers: [
+        { name: 'Buquê de Flores', link: '#' },
+        { name: 'Caixa de Chocolates', link: '#' }
+      ]
+    },
+    'es-ES': {
+      title: '¡Sorprende con un regalo! 🎁',
+      offers: [
+        { name: 'Ramo de Flores', link: '#' },
+        { name: 'Caja de Chocolates', link: '#' }
+      ]
+    }
+  };
+
+  const localeData = affData[currentLang];
+  if (!localeData) {
+    affSection.style.display = 'none';
+    return;
+  }
+
+  affSection.style.display = 'block';
+  affTitle.textContent = localeData.title;
+  offersEl.innerHTML = '';
+
+  localeData.offers.forEach(offer => {
+    const offerLink = document.createElement('a');
+    offerLink.href = offer.link;
+    offerLink.textContent = offer.name;
+    offerLink.target = '_blank';
+    offerLink.rel = 'noopener';
+    offersEl.appendChild(offerLink);
+  });
+}
 
   function updateUI() {
   introEl.textContent = data[currentLang].intro;  // ← Corrige o problema
