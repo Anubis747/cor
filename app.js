@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let currentLang = select?.value || 'en-US';
 
   function loadLanguageData(langCode) {
-    fetch(`${basePath}lines_${langCode.replace('-', '_')}.json`)
+    fetch(`${basePath}lines_${langCode.slice(0, 2)}.json`)
       .then(res => res.json())
       .then(data => {
         linesArray = data.lines;
