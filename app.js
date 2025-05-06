@@ -37,7 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
   let linesArray = [];
   let commentsArray = [];
 
-  // mover pra cá
   let currentLang = select?.value || 'en-US';
 
   function loadLanguageData(langCode) {
