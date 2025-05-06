@@ -19,7 +19,7 @@ const data = {
   'pt-BR': {
     initial:  "Pronto para uma cantada divertida?",
     intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
-    generate: "Generate",
+    generate: "Gerar Cantada",
     lines: [
       "Você é Wi‑Fi? Porque estou sentindo conexão. 📶",
       "Seu sorriso ilumina mais que o sol nascente. ☀️",
@@ -34,9 +34,9 @@ const data = {
     langLabel: "Escolha outro idioma:"
   },
   'es-ES': {
-    initial:  "¡Hora de una cantada divertida!",
-    intro:    "¡Haz clic para generar una cantada divertida y compártela!",
-    generate: "Generate",
+    initial:  "¿Listo para una cantada divertida?",
+    intro:    "¡Haz clic para ver una cantada divertida y compártela!",
+    generate: "Generar Frase",
     lines: [
       "¿Eres un imán? Porque me atraes como nada más. 🧲",
       "Si la belleza fuera tiempo, tú serías la eternidad. ⌛️",
@@ -52,7 +52,6 @@ const data = {
   }
 };
 
-// grab elements
 const introEl    = document.getElementById('intro');
 const lineEl     = document.getElementById('line');
 const btn        = document.getElementById('generate');
@@ -62,19 +61,13 @@ const affSection = document.getElementById('affiliate');
 const affTitle   = document.getElementById('affTitle');
 const select     = document.getElementById('langSelect');
 const langLabel  = document.getElementById('langLabel');
-const copyBtn    = document.getElementById('copyBtn');
-const shareBtn   = document.getElementById('shareBtn');
+const copyIcon   = document.getElementById('copyIcon');
+const shareIcon  = document.getElementById('shareIcon');
 
-if (!introEl || !lineEl || !btn || !commentEl || !copyBtn || !shareBtn) {
-  console.error("One or more UI elements not found", { introEl, lineEl, btn, commentEl, copyBtn, shareBtn });
-}
-
-// copy with fallback
 function copyText(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     return navigator.clipboard.writeText(text);
   }
-  // fallback
   const ta = document.createElement('textarea');
   ta.value = text;
   ta.setAttribute('readonly','');
@@ -87,7 +80,7 @@ function copyText(text) {
   return ok ? Promise.resolve() : Promise.reject();
 }
 
-copyBtn.addEventListener('click', () => {
+copyIcon.addEventListener('click', () => {
   const text = lineEl.textContent;
   if (!text) return;
   copyText(text)
@@ -95,27 +88,26 @@ copyBtn.addEventListener('click', () => {
       commentEl.textContent = "Copied! ✅";
       setTimeout(() => commentEl.textContent = "", 1500);
     })
-    .catch(err => {
-      console.error("Copy failed", err);
+    .catch(() => {
       commentEl.textContent = "Copy failed 😢";
       setTimeout(() => commentEl.textContent = "", 1500);
     });
 });
 
-shareBtn.addEventListener('click', () => {
+shareIcon.addEventListener('click', () => {
   const text = lineEl.textContent;
   const url  = window.location.href;
   if (!text) return;
   if (navigator.share) {
-    navigator.share({ title: 'Cheesy or Not?', text, url })
-      .catch(err => console.error("Web share failed", err));
+    navigator.share({ title:'Cheesy or Not?', text, url }).catch(()=>{});
   } else {
-    const shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url);
-    window.open(shareUrl, '_blank', 'noopener');
+    window.open(
+      'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url),
+      '_blank','noopener'
+    );
   }
 });
 
-// locale detection
 let loc = navigator.language;
 if (!data[loc]) {
   if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -123,9 +115,8 @@ if (!data[loc]) {
   else loc = 'en-US';
 }
 let currentLoc = loc;
-select.value = currentLoc;
+select.value  = currentLoc;
 
-// render affiliate offers
 function renderOffers() {
   offersEl.innerHTML = '';
   data[currentLoc].offers.forEach(item => {
@@ -136,7 +127,6 @@ function renderOffers() {
   });
 }
 
-// update UI
 function updateUI() {
   const cfg = data[currentLoc];
   introEl.textContent    = cfg.intro;
@@ -150,7 +140,6 @@ function updateUI() {
   affSection.style.display = (currentLoc==='pt-BR' || currentLoc==='en-US') ? 'block' : 'none';
 }
 
-// generate line + comment
 btn.addEventListener('click', () => {
   const cfg = data[currentLoc];
   const line = cfg.lines[Math.floor(Math.random()*cfg.lines.length)];
@@ -159,11 +148,9 @@ btn.addEventListener('click', () => {
   commentEl.textContent = comm;
 });
 
-// language change
 select.addEventListener('change', e => {
   currentLoc = e.target.value;
   updateUI();
 });
 
-// initial render
 updateUI();
