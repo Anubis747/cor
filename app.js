@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
       langLabel: "Elige otro idioma:"
     }
   };
-
+// Essas são suas variáveis existentes
   const introEl = document.getElementById('intro');
   const lineEl = document.getElementById('line');
   const btn = document.getElementById('generate');
@@ -67,29 +67,9 @@ window.addEventListener('DOMContentLoaded', () => {
   let currentLang = navigator.language in data ? navigator.language : 'en-US';
   select.value = currentLang;
 
-  function renderAffiliate() {
-    offersEl.innerHTML = '';
-    data[currentLang].offers.forEach(item => {
-      const a = document.createElement('a');
-      a.textContent = item.title;
-      a.href = item.link;
-      a.target = '_blank';
-      offersEl.appendChild(a);
-      offersEl.appendChild(document.createElement('br'));
-    });
+  function renderAffiliate() { /* sua função atual */ }
 
-    affTitle.textContent = data[currentLang].affTitle;
-    affSection.style.display = ['pt-BR','en-US'].includes(currentLang) ? 'block' : 'none';
-  }
-
-  function updateUI() {
-    introEl.textContent = data[currentLang].intro;
-    lineEl.textContent = data[currentLang].initial;
-    btn.textContent = data[currentLang].generate;
-    langLabel.textContent = data[currentLang].langLabel;
-    commentEl.textContent = '';
-    renderAffiliate();
-  }
+  function updateUI() { /* sua função atual */ }
 
   btn.addEventListener('click', () => {
     const line = data[currentLang].lines[Math.floor(Math.random() * data[currentLang].lines.length)];
@@ -103,56 +83,55 @@ window.addEventListener('DOMContentLoaded', () => {
     updateUI();
   });
 
-  updateUI();
-});
-
-// Função de copiar texto com fallback seguro
-function copyText(text) {
-  if (navigator.clipboard?.writeText) {
-    return navigator.clipboard.writeText(text);
-  } else {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand('copy');
-    document.body.removeChild(ta);
-    return ok ? Promise.resolve() : Promise.reject();
-  }
-}
-// Eventos para ícones (corrigido, robusto e com logs)
-const copyIcon = document.getElementById('copyIcon');
-const shareIcon = document.getElementById('shareIcon');
-
-if (copyIcon) {
-  copyIcon.addEventListener('click', () => {
-    const text = lineEl.textContent;
-    if (!text) return;
-    copyText(text)
-      .then(() => { commentEl.textContent = "Copied! ✅"; })
-      .catch(() => { commentEl.textContent = "Copy failed 😢"; });
-    setTimeout(() => commentEl.textContent = "", 1500);
-  });
-} else {
-  console.error('copyIcon não encontrado no HTML');
-}
-
-if (shareIcon) {
-  shareIcon.addEventListener('click', () => {
-    const text = lineEl.textContent;
-    const url = window.location.href;
-    if (!text) return;
-
-    if (navigator.share) {
-      navigator.share({ title: 'Cheesy or Not?', text: text, url: url })
-        .catch(() => {});
+  // Função de copiar texto com fallback seguro
+  function copyText(text) {
+    if (navigator.clipboard?.writeText) {
+      return navigator.clipboard.writeText(text);
     } else {
-      const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`;
-      window.open(shareURL, '_blank', 'noopener');
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok ? Promise.resolve() : Promise.reject();
     }
-  });
-} else {
-  console.error('shareIcon não encontrado no HTML');
-}
+  }
+
+  // Eventos para ícones (corrigido, robusto e com logs)
+  const copyIcon = document.getElementById('copyIcon');
+  const shareIcon = document.getElementById('shareIcon');
+
+  if (copyIcon) {
+    copyIcon.addEventListener('click', () => {
+      const text = lineEl.textContent;
+      if (!text) return;
+      copyText(text)
+        .then(() => { commentEl.textContent = "Copied! ✅"; })
+        .catch(() => { commentEl.textContent = "Copy failed 😢"; });
+      setTimeout(() => commentEl.textContent = "", 1500);
+    });
+  }
+
+  if (shareIcon) {
+    shareIcon.addEventListener('click', () => {
+      const text = lineEl.textContent;
+      const url = window.location.href;
+      if (!text) return;
+
+      if (navigator.share) {
+        navigator.share({ title: 'Cheesy or Not?', text: text, url: url })
+          .catch(() => {});
+      } else {
+        const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`;
+        window.open(shareURL, '_blank', 'noopener');
+      }
+    });
+  }
+
+  // Sempre por último
+  updateUI();
+
+}); // fim do DOMContentLoaded
