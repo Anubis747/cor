@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
     'pt-BR': {
       initial:  "Pronto para uma cantada divertida?",
       intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
-      generate: "Gerar Cantada",
+      generate: "Generate",
       lines: [
         "Você é Wi‑Fi? Porque estou sentindo conexão. 📶",
         "Seu sorriso ilumina mais que o sol nascente. ☀️",
@@ -53,7 +53,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // capturar elementos — agora só copyIcon/shareIcon, não copyBtn
   const introEl    = document.getElementById('intro');
   const lineEl     = document.getElementById('line');
   const btn        = document.getElementById('generate');
@@ -63,38 +62,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const affTitle   = document.getElementById('affTitle');
   const select     = document.getElementById('langSelect');
   const langLabel  = document.getElementById('langLabel');
-  const copyIcon   = document.getElementById('copyIcon');
-  const shareIcon  = document.getElementById('shareIcon');
 
-  // fallback clipboard
-  function copyText(text) {
-    if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text);
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.setAttribute('readonly','');
-    ta.style.position = 'absolute'; ta.style.left = '-9999px';
-    document.body.appendChild(ta); ta.select();
-    const ok = document.execCommand('copy');
-    document.body.removeChild(ta);
-    return ok ? Promise.resolve() : Promise.reject();
-  }
-
-  // Copy listener
-  if (copyIcon) copyIcon.addEventListener('click', () => {
-    const t = lineEl.textContent; if (!t) return;
-    copyText(t)
-      .then(() => { commentEl.textContent = "Copied! ✅"; setTimeout(() => commentEl.textContent = "",1500); })
-      .catch(() => { commentEl.textContent = "Copy failed 😢"; setTimeout(() => commentEl.textContent = "",1500); });
-  });
-
-  // Share listener
-  if (shareIcon) shareIcon.addEventListener('click', () => {
-    const t = lineEl.textContent; if (!t) return;
-    const u = window.location.href;
-    if (navigator.share) navigator.share({ title:'Cheesy or Not?', text:t, url:u }).catch(()=>{});
-    else window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t+' '+u),'_blank','noopener');
-  });
-
-  // detect locale
   let loc = navigator.language;
   if (!data[loc]) {
     if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -126,14 +94,16 @@ window.addEventListener('DOMContentLoaded', () => {
     affSection.style.display = (currentLoc==='pt-BR'||currentLoc==='en-US')?'block':'none';
   }
 
-  // generate line
   btn.addEventListener('click', () => {
     const c = data[currentLoc];
     lineEl.textContent    = c.lines[Math.floor(Math.random()*c.lines.length)];
     commentEl.textContent = c.comments[Math.floor(Math.random()*c.comments.length)];
   });
-  // change language
-  select.addEventListener('change', e => { currentLoc = e.target.value; updateUI(); });
+
+  select.addEventListener('change', e => {
+    currentLoc = e.target.value;
+    updateUI();
+  });
 
   updateUI();
 });
