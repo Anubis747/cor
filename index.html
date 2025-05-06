@@ -2,10 +2,22 @@
 <html lang="en-US">
 <head>
   <meta charset="UTF-8">
-  <title>Cheesy or Not? 🧀❤️</title>
+  <title>Cheesy or Not? 🧀❤️❤️</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- AdSense Script -->
+  <!-- CSP -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' https://pagead2.googlesyndication.com https://cdnjs.cloudflare.com https://*.buymeacoffee.com;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+    img-src 'self' https://img.buymeacoffee.com data:;
+    connect-src 'self';
+    font-src 'self' https://cdnjs.cloudflare.com;
+    frame-src https://*.google.com;
+    object-src 'none';
+  ">
+
+  <!-- AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9273959048665563" crossorigin="anonymous"></script>
 
   <!-- Favicon Emoji -->
@@ -44,13 +56,11 @@
       </div>
     </div>
 
-    <!-- Amazon affiliate carousel -->
     <section id="affiliate" class="affiliate">
       <h2 id="affTitle">Surprise with a gift! 🎁</h2>
       <div class="carousel" id="carousel"></div>
     </section>
 
-    <!-- Buy Me a Coffee -->
     <div class="coffee-placeholder">
       <p id="bmcText">Support us with a coffee ☕</p>
       <a href="https://www.buymeacoffee.com/liveordead" target="_blank" rel="noopener">
@@ -59,7 +69,6 @@
       </a>
     </div>
 
-    <!-- Language selector -->
     <div class="lang-switch">
       <label for="langSelect" id="langLabel">Choose another language:</label>
       <select id="langSelect">
