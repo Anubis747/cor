@@ -9,10 +9,15 @@ body {
 main {
   width: 100%;
   max-width: 360px;
+  text-align: center;
 }
 h1 {
-  text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+.intro {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1.2rem;
 }
 .card, .affiliate {
   background: #fff;
@@ -35,6 +40,8 @@ button {
   font-size: 1rem;
   padding: 0.6rem 1.2rem;
   transition: background 0.2s;
+  display: inline-block;
+  margin: 0.6rem auto;
 }
 button:hover {
   background: #ff4757;
@@ -64,9 +71,8 @@ button:hover {
   text-decoration: none;
 }
 .lang-switch {
-  text-align: center;
+  margin-top: 1rem;
 }
 label, select {
-  margin-top: 0.5rem;
   font-size: 0.9rem;
 }
