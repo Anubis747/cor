@@ -69,7 +69,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function renderAffiliate() { /* sua função atual */ }
 
-  function updateUI() { /* sua função atual */ }
+  function updateUI() {
+  introEl.textContent = data[currentLang].intro;  // ← Corrige o problema
+  lineEl.textContent = data[currentLang].initial;
+  btn.textContent = data[currentLang].generate;
+  langLabel.textContent = data[currentLang].langLabel;
+  commentEl.textContent = '';
+  renderAffiliate();
+}
 
   btn.addEventListener('click', () => {
     const line = data[currentLang].lines[Math.floor(Math.random() * data[currentLang].lines.length)];
