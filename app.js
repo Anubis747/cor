@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const translations = {
     'en-US': {
       intro: "Click to generate a cheesy pick-up line!",
@@ -29,6 +29,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const affTitle   = document.getElementById('affTitle');
   const carousel   = document.getElementById('carousel');
   const bmcText    = document.getElementById('bmcText');
+  const copyIcon   = document.getElementById('copyIcon');
+  const shareIcon  = document.getElementById('shareIcon');
 
   const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
   let linesArray = [];
@@ -51,46 +53,29 @@ window.addEventListener('DOMContentLoaded', () => {
   let carouselIndex = 0;
 
   function updateCarousel() {
-  const product = affiliateProducts[carouselIndex];
-  if (carousel && product) {
+    if (!carousel) return;
+    const product = affiliateProducts[carouselIndex];
     carousel.innerHTML = `<a href="${product.link}" target="_blank" rel="noopener">${product.name}</a>`;
     carouselIndex = (carouselIndex + 1) % affiliateProducts.length;
   }
-}
-
-  function loadLanguageData(langCode) {
-    fetch(`${basePath}lines_${langCode.slice(0, 2)}.json`)
-      .then(res => res.json())
-      .then(data => {
-        linesArray = data.lines;
-        commentsArray = data.comments;
-        updateUI();
-      })
-      .catch(err => {
-        console.error("Erro ao carregar dados:", err);
-        linesArray = ["Error loading pickup lines."];
-        commentsArray = ["Oops!"];
-        updateUI();
-      });
-  }
 
   function renderAffiliate() {
-  const titles = {
-    'en-US': 'Surprise with a gift! 🎁',
-    'pt-BR': 'Surpreenda com um presente! 🎁',
-    'es-ES': '¡Sorprende con un regalo! 🎁'
-  };
-  if (affTitle) {
+    if (!affTitle) return;
+    const titles = {
+      'en-US': 'Surprise with a gift! 🎁',
+      'pt-BR': 'Surpreenda com um presente! 🎁',
+      'es-ES': '¡Sorprende con un regalo! 🎁'
+    };
     affTitle.textContent = titles[currentLang] || titles['en-US'];
   }
-}
+
   function updateUI() {
     const t = translations[currentLang] || translations['en-US'];
-    introEl.textContent   = t.intro;
-    lineEl.textContent    = t.initial;
-    btn.textContent       = t.generate;
-    langLabel.textContent = t.langLabel;
-    commentEl.textContent = '';
+    if (introEl) introEl.textContent = t.intro;
+    if (lineEl) lineEl.textContent = t.initial;
+    if (btn) btn.textContent = t.generate;
+    if (langLabel) langLabel.textContent = t.langLabel;
+    if (commentEl) commentEl.textContent = '';
     renderAffiliate();
 
     if (bmcText) {
@@ -102,63 +87,64 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  setInterval(updateCarousel, 4000);
-  updateCarousel();
+  function loadLanguageData(langCode) {
+    const path = `${basePath}lines_${langCode.slice(0, 2)}.json`;
 
-  btn.addEventListener('click', () => {
-    if (linesArray.length === 0) return;
-    const line = linesArray[Math.floor(Math.random() * linesArray.length)];
-    const comment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
-    lineEl.textContent = line;
-    commentEl.textContent = comment;
-  });
-
-  select.addEventListener('change', () => {
-    currentLang = select.value;
-    loadLanguageData(currentLang);
-  });
-
-  function copyText(text) {
-    if (navigator.clipboard?.writeText) {
-      return navigator.clipboard.writeText(text);
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      const ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      return ok ? Promise.resolve() : Promise.reject();
-    }
+    fetch(path)
+      .then(res => {
+        if (!res.ok) throw new Error('Erro ao carregar: ' + path);
+        return res.json();
+      })
+      .then(data => {
+        linesArray = data.lines || [];
+        commentsArray = data.comments || [];
+        updateUI();
+        updateCarousel();
+        setInterval(updateCarousel, 4000);
+      })
+      .catch(err => {
+        console.error("Erro ao carregar dados:", err);
+        linesArray = ["Error loading pickup lines."];
+        commentsArray = ["Oops!"];
+        updateUI();
+        updateCarousel();
+        setInterval(updateCarousel, 4000);
+      });
   }
 
-  const copyIcon  = document.getElementById('copyIcon');
-  const shareIcon = document.getElementById('shareIcon');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      if (!linesArray.length) {
+        if (commentEl) commentEl.textContent = "Lines not loaded 😢";
+        return;
+      }
+      const line = linesArray[Math.floor(Math.random() * linesArray.length)];
+      const comment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
+      if (lineEl) lineEl.textContent = line;
+      if (commentEl) commentEl.textContent = comment;
+    });
+  }
 
   if (copyIcon) {
     copyIcon.addEventListener('click', () => {
-      const text = lineEl.textContent;
+      const text = lineEl?.textContent;
       if (!text) return;
-      copyText(text)
-        .then(() => { commentEl.textContent = "Copied! ✅"; })
-        .catch(() => { commentEl.textContent = "Copy failed 😢"; });
+      navigator.clipboard.writeText(text)
+        .then(() => commentEl.textContent = "Copied! ✅")
+        .catch(() => commentEl.textContent = "Copy failed 😢");
       setTimeout(() => commentEl.textContent = "", 1500);
     });
   }
 
   if (shareIcon) {
     shareIcon.addEventListener('click', () => {
-      const text = lineEl.textContent;
+      const text = lineEl?.textContent;
       const url = window.location.href;
       if (!text) return;
-
       if (navigator.share) {
-        navigator.share({ title: 'Cheesy or Not?', text: text, url: url })
-          .catch(() => {});
+        navigator.share({ title: 'Cheesy or Not?', text, url }).catch(() => {});
       } else {
-        const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`;
+        const shareURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}`;
         window.open(shareURL, '_blank', 'noopener');
       }
     });
@@ -168,7 +154,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     : navigator.language.startsWith('es') ? 'es-ES'
                     : 'en-US';
 
-  select.value = browserLang;
-  currentLang  = browserLang;
+  if (select) select.value = browserLang;
+  currentLang = browserLang;
   loadLanguageData(currentLang);
 });
