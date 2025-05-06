@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const copyIcon   = $('copyIcon');
   const shareIcon  = $('shareIcon');
 
-  const basePath = window.location.pathname.replace(/\\/[^/]*$/, '/');
+  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/');
   let linesArray = [];
   let commentsArray = [];
   let currentLang = select?.value || 'en-US';
