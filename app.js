@@ -65,7 +65,7 @@ const langLabel  = document.getElementById('langLabel');
 const copyIcon   = document.getElementById('copyIcon');
 const shareIcon  = document.getElementById('shareIcon');
 
-// Função de cópia com fallback
+// fallback de clipboard
 function copyText(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     return navigator.clipboard.writeText(text);
@@ -82,35 +82,33 @@ function copyText(text) {
   return ok ? Promise.resolve() : Promise.reject();
 }
 
-// eventos de copy/share
-copyIcon.addEventListener('click', () => {
-  const text = lineEl.textContent;
-  if (!text) return;
-  copyText(text)
-    .then(() => {
-      commentEl.textContent = "Copied! ✅";
-      setTimeout(() => commentEl.textContent = "", 1500);
-    })
-    .catch(() => {
-      commentEl.textContent = "Copy failed 😢";
-      setTimeout(() => commentEl.textContent = "", 1500);
-    });
+// copy/share
+if (copyIcon) copyIcon.addEventListener('click', () => {
+  const t = lineEl.textContent;
+  if (!t) return;
+  copyText(t).then(() => {
+    commentEl.textContent = "Copied! ✅";
+    setTimeout(()=> commentEl.textContent="", 1500);
+  }).catch(()=> {
+    commentEl.textContent = "Copy failed 😢";
+    setTimeout(()=> commentEl.textContent="", 1500);
+  });
 });
-shareIcon.addEventListener('click', () => {
-  const text = lineEl.textContent;
-  const url  = window.location.href;
-  if (!text) return;
+if (shareIcon) shareIcon.addEventListener('click', () => {
+  const t = lineEl.textContent;
+  const u = window.location.href;
+  if (!t) return;
   if (navigator.share) {
-    navigator.share({ title:'Cheesy or Not?', text, url }).catch(()=>{});
+    navigator.share({ title:'Cheesy or Not?', text:t, url:u }).catch(()=>{});
   } else {
     window.open(
-      'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + ' ' + url),
+      'https://twitter.com/intent/tweet?text='+encodeURIComponent(t+' '+u),
       '_blank','noopener'
     );
   }
 });
 
-// detecta locale
+// locale
 let loc = navigator.language;
 if (!data[loc]) {
   if (loc.startsWith('pt')) loc = 'pt-BR';
@@ -118,45 +116,44 @@ if (!data[loc]) {
   else loc = 'en-US';
 }
 let currentLoc = loc;
-select.value  = currentLoc;
+select.value = currentLoc;
 
-// render ofertas
+// ofertas
 function renderOffers() {
   offersEl.innerHTML = '';
-  data[currentLoc].offers.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'offer';
-    div.innerHTML = `<img src="${item.img}" alt=""><a href="${item.link}" target="_blank">${item.title}</a>`;
-    offersEl.appendChild(div);
+  data[currentLoc].offers.forEach(i => {
+    const d = document.createElement('div');
+    d.className = 'offer';
+    d.innerHTML = `<img src="${i.img}" alt=""><a href="${i.link}" target="_blank">${i.title}</a>`;
+    offersEl.appendChild(d);
   });
 }
 
-// atualiza UI
+// UI
 function updateUI() {
-  const cfg = data[currentLoc];
-  introEl.textContent    = cfg.intro;
-  btn.textContent        = cfg.generate;
-  lineEl.textContent     = cfg.initial;
+  const c = data[currentLoc];
+  introEl.textContent    = c.intro;
+  btn.textContent        = c.generate;
+  lineEl.textContent     = c.initial;
   commentEl.textContent  = "";
-  affTitle.textContent   = cfg.affTitle;
-  langLabel.textContent  = cfg.langLabel;
-  select.value           = currentLoc;
+  affTitle.textContent   = c.affTitle;
+  langLabel.textContent  = c.langLabel;
   renderOffers();
-  affSection.style.display = (currentLoc==='pt-BR' || currentLoc==='en-US') ? 'block' : 'none';
+  affSection.style.display = (currentLoc==='pt-BR'||currentLoc==='en-US')?'block':'none';
 }
 
-// gerar frase
-btn.addEventListener('click', () => {
-  const cfg = data[currentLoc];
-  const line = cfg.lines[Math.floor(Math.random()*cfg.lines.length)];
-  const comm = cfg.comments[Math.floor(Math.random()*cfg.comments.length)];
-  lineEl.textContent    = line;
-  commentEl.textContent = comm;
+// gerar
+btn.addEventListener('click', ()=> {
+  const c = data[currentLoc];
+  const l = c.lines[Math.floor(Math.random()*c.lines.length)];
+  const m = c.comments[Math.floor(Math.random()*c.comments.length)];
+  lineEl.textContent = l;
+  commentEl.textContent = m;
 });
 // troca idioma
-select.addEventListener('change', e => {
+select.addEventListener('change', e=> {
   currentLoc = e.target.value;
   updateUI();
 });
-// render inicial
+// inicial
 updateUI();
