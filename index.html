@@ -8,8 +8,12 @@
   <!-- Favicon Emoji -->
   <link rel="icon" href="data:image/svg+xml,
     <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
-      <text y=%22.9em%22 font-size=%2280%22>❤️</text>
+      <text y=%22.9em%22 font-size=%2280%22>🧀❤️</text>
     </svg>">
+
+  <!-- FontAwesome (para ícones) -->
+  <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <main>
@@ -23,6 +27,12 @@
       <p id="line" class="line"></p>
       <button id="generate"></button>
       <p id="comment" class="comment"></p>
+      
+      <!-- Ícones Copiar e Compartilhar -->
+      <div class="icon-actions">
+        <i class="fa-solid fa-copy" id="copyIcon" title="Copy"></i>
+        <i class="fa-solid fa-share-alt" id="shareIcon" title="Share"></i>
+      </div>
     </div>
 
     <section id="affiliate" class="affiliate" style="display: none;">
