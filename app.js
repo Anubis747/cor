@@ -1,59 +1,26 @@
 window.addEventListener('DOMContentLoaded', () => {
 
-  const data = {
+  const translations = {
     'en-US': {
       intro: "Click to generate a cheesy pick-up line!",
       generate: "Generate",
       initial: "Ready for a pick-up line?",
-      lines: [
-        "Are you a magician? Because whenever I look at you, everyone else disappears.",
-        "Do you have a name, or can I call you mine?",
-        "Is your dad a boxer? Because you're a knockout!"
-      ],
-      comments: ["🔥", "😊", "😉"],
-      affTitle: "Surprise someone!",
-      offers: [
-        { title: "Flowers 🌸", link: "https://amzn.to/US_FLOWER" },
-        { title: "Chocolates 🍫", link: "https://amzn.to/US_CHOCOLATE" }
-      ],
       langLabel: "Choose another language:"
     },
     'pt-BR': {
       intro: "Clique para gerar uma cantada!",
       generate: "Gerar cantada",
       initial: "Que tal uma cantada divertida?",
-      lines: [
-        "Você é Wi-Fi? Porque estou sentindo conexão.",
-        "Seu sorriso ilumina mais que o sol.",
-        "Se beleza fosse música, você seria uma sinfonia."
-      ],
-      comments: ["🔥", "😊", "😉"],
-      affTitle: "Surpreenda alguém!",
-      offers: [
-        { title: "Flores 🌸", link: "https://amzn.to/BR_FLOWER" },
-        { title: "Chocolates 🍫", link: "https://amzn.to/BR_CHOCOLATE" }
-      ],
       langLabel: "Escolha outro idioma:"
     },
     'es-ES': {
       intro: "¡Haz clic para una frase divertida!",
       generate: "Generar frase",
       initial: "¿Listo para sonreír?",
-      lines: [
-        "¿Eres un imán? Porque me atraes como nada más.",
-        "Si la belleza fuera tiempo, serías eternidad.",
-        "¿Eres una estrella? Porque iluminas mi noche."
-      ],
-      comments: ["🔥", "😊", "😉"],
-      affTitle: "¡Sorprende a alguien!",
-      offers: [
-        { title: "Flores 🌸", link: "https://amzn.to/ES_FLOWER" },
-        { title: "Chocolates 🍫", link: "https://amzn.to/ES_CHOCOLATE" }
-      ],
       langLabel: "Elige otro idioma:"
     }
   };
-// Essas são suas variáveis existentes
+
   const introEl = document.getElementById('intro');
   const lineEl = document.getElementById('line');
   const btn = document.getElementById('generate');
@@ -64,76 +31,95 @@ window.addEventListener('DOMContentLoaded', () => {
   const affTitle = document.getElementById('affTitle');
   const offersEl = document.getElementById('offers');
 
-  let currentLang = navigator.language in data ? navigator.language : 'en-US';
-  select.value = currentLang;
+  let linesArray = [];
+  let commentsArray = [];
 
-  function renderAffiliate() {
-  const affData = {
-    'en-US': {
-      title: 'Surprise with a gift! 🎁',
-      offers: [
-        { name: 'Bouquet of Flowers', link: '#' },
-        { name: 'Box of Chocolates', link: '#' }
-      ]
-    },
-    'pt-BR': {
-      title: 'Surpreenda com um presente! 🎁',
-      offers: [
-        { name: 'Buquê de Flores', link: '#' },
-        { name: 'Caixa de Chocolates', link: '#' }
-      ]
-    },
-    'es-ES': {
-      title: '¡Sorprende con un regalo! 🎁',
-      offers: [
-        { name: 'Ramo de Flores', link: '#' },
-        { name: 'Caja de Chocolates', link: '#' }
-      ]
-    }
-  };
+  let currentLang = select.value || 'en-US';
 
-  const localeData = affData[currentLang];
-  if (!localeData) {
-    affSection.style.display = 'none';
-    return;
+  function loadLanguageData(langCode) {
+    fetch(`lines_${langCode}.json`)
+      .then(res => res.json())
+      .then(data => {
+        linesArray = data.lines;
+        commentsArray = data.comments;
+        updateUI();
+      })
+      .catch(err => {
+        console.error("Erro ao carregar dados:", err);
+        linesArray = ["Error loading pickup lines."];
+        commentsArray = ["Oops!"];
+        updateUI();
+      });
   }
 
-  affSection.style.display = 'block';
-  affTitle.textContent = localeData.title;
-  offersEl.innerHTML = '';
+  function renderAffiliate() {
+    const affData = {
+      'en-US': {
+        title: 'Surprise with a gift! 🎁',
+        offers: [
+          { name: 'Bouquet of Flowers', link: 'https://amzn.to/US_FLOWER' },
+          { name: 'Box of Chocolates', link: 'https://amzn.to/US_CHOCOLATE' }
+        ]
+      },
+      'pt-BR': {
+        title: 'Surpreenda com um presente! 🎁',
+        offers: [
+          { name: 'Buquê de Flores', link: 'https://amzn.to/BR_FLOWER' },
+          { name: 'Caixa de Chocolates', link: 'https://amzn.to/BR_CHOCOLATE' }
+        ]
+      },
+      'es-ES': {
+        title: '¡Sorprende con un regalo! 🎁',
+        offers: [
+          { name: 'Ramo de Flores', link: 'https://amzn.to/ES_FLOWER' },
+          { name: 'Caja de Chocolates', link: 'https://amzn.to/ES_CHOCOLATE' }
+        ]
+      }
+    };
 
-  localeData.offers.forEach(offer => {
-    const offerLink = document.createElement('a');
-    offerLink.href = offer.link;
-    offerLink.textContent = offer.name;
-    offerLink.target = '_blank';
-    offerLink.rel = 'noopener';
-    offersEl.appendChild(offerLink);
-  });
-}
+    const localeData = affData[currentLang];
+    if (!localeData) {
+      affSection.style.display = 'none';
+      return;
+    }
+
+    affSection.style.display = 'block';
+    affTitle.textContent = localeData.title;
+    offersEl.innerHTML = '';
+
+    localeData.offers.forEach(offer => {
+      const offerLink = document.createElement('a');
+      offerLink.href = offer.link;
+      offerLink.textContent = offer.name;
+      offerLink.target = '_blank';
+      offerLink.rel = 'noopener';
+      offersEl.appendChild(offerLink);
+    });
+  }
 
   function updateUI() {
-  introEl.textContent = data[currentLang].intro;  // ← Corrige o problema
-  lineEl.textContent = data[currentLang].initial;
-  btn.textContent = data[currentLang].generate;
-  langLabel.textContent = data[currentLang].langLabel;
-  commentEl.textContent = '';
-  renderAffiliate();
-}
+    const t = translations[currentLang] || translations['en-US'];
+    introEl.textContent = t.intro;
+    lineEl.textContent = t.initial;
+    btn.textContent = t.generate;
+    langLabel.textContent = t.langLabel;
+    commentEl.textContent = '';
+    renderAffiliate();
+  }
 
   btn.addEventListener('click', () => {
-    const line = data[currentLang].lines[Math.floor(Math.random() * data[currentLang].lines.length)];
-    const comment = data[currentLang].comments[Math.floor(Math.random() * data[currentLang].comments.length)];
+    if (linesArray.length === 0) return;
+    const line = linesArray[Math.floor(Math.random() * linesArray.length)];
+    const comment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
     lineEl.textContent = line;
     commentEl.textContent = comment;
   });
 
   select.addEventListener('change', () => {
     currentLang = select.value;
-    updateUI();
+    loadLanguageData(currentLang);
   });
 
-  // Função de copiar texto com fallback seguro
   function copyText(text) {
     if (navigator.clipboard?.writeText) {
       return navigator.clipboard.writeText(text);
@@ -150,7 +136,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Eventos para ícones (corrigido, robusto e com logs)
   const copyIcon = document.getElementById('copyIcon');
   const shareIcon = document.getElementById('shareIcon');
 
@@ -181,7 +166,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Sempre por último
-  updateUI();
+  // Detectar idioma inicial do navegador
+  const browserLang = navigator.language.startsWith('pt') ? 'pt-BR'
+                    : navigator.language.startsWith('es') ? 'es-ES'
+                    : 'en-US';
 
-}); // fim do DOMContentLoaded
+  select.value = browserLang;
+  currentLang = browserLang;
+  loadLanguageData(currentLang);
+
+});
