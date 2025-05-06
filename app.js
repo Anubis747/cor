@@ -1,5 +1,6 @@
 const data = {
   'en-US': {
+    initial:  "Ready for a pick‑up line?",
     intro:    "Click the button to generate a cheesy pick‑up line and share it!",
     generate: "Generate",
     lines: [
@@ -16,8 +17,9 @@ const data = {
     langLabel: "Choose another language:"
   },
   'pt-BR': {
+    initial:  "Vamos gerar uma cantada?",
     intro:    "Clique no botão para gerar uma cantada divertida e compartilhe!",
-    generate: "Generate",             // botão permanece “Generate”
+    generate: "Generate",
     lines: [
       "Você acredita em amor à primeira vista ou devo passar de novo? 👀",
       "Seu pai é padeiro? Porque você é um sonho! 🥐",
@@ -32,6 +34,7 @@ const data = {
     langLabel: "Escolha outro idioma:"
   },
   'es-ES': {
+    initial:  "¡Hora de una frase divertida!",
     intro:    "¡Haz clic para generar una frase divertida y compártela!",
     generate: "Generate",
     lines: [
@@ -89,7 +92,7 @@ function updateUI() {
   const cfg = data[currentLoc];
   introEl.textContent    = cfg.intro;
   btn.textContent        = cfg.generate;
-  lineEl.textContent     = "Ready for a pick‑up line?";
+  lineEl.textContent     = cfg.initial;
   commentEl.textContent  = "";
   affTitle.textContent   = cfg.affTitle;
   langLabel.textContent  = cfg.langLabel;
