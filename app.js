@@ -66,17 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
     { names: { 'en-US': "Matching Bracelets for Couples 💑" }, link: "https://www.amazon.com/dp/B07Y5MGDBQ?tag=flirtspark09-20" }
   ];
   const affiliateProductsES = [
-    { names: { 'es-ES': "Collar de rosa eterna 🌹" }, link: "https://s.click.aliexpress.com/e/_oFsMUoj" },
-    { names: { 'es-ES': "Anillo de compromiso con zirconia cúbica 💍" }, link: "https://s.click.aliexpress.com/e/_olHebLN" },
-    { names: { 'es-ES': "Pulsera de pareja magnética con corazón ❤️" }, link: "https://s.click.aliexpress.com/e/_oBSBvjl" },
-    { names: { 'es-ES': "Caja de regalo con flores y luz LED 🎁" }, link: "https://s.click.aliexpress.com/e/_ol4Qgrp" },
-    { names: { 'es-ES': "Lámpara de luna 3D con base de madera 🌕" }, link: "https://s.click.aliexpress.com/e/_ookux5p" },
-    { names: { 'es-ES': "Taza mágica que revela mensaje de amor ☕" }, link: "https://s.click.aliexpress.com/e/_onVPIjD" },
-    { names: { 'es-ES': "Peluches de pareja abrazados 🧸" }, link: "https://s.click.aliexpress.com/e/_onAupaj" },
-    { names: { 'es-ES': "Llaveros de pareja con imán de corazón 🔑" }, link: "https://s.click.aliexpress.com/e/_omZKxhZ" },
-    { names: { 'es-ES': "Caja de música con diseño de corazón 🎶" }, link: "https://s.click.aliexpress.com/e/_opPZdDZ" },
-    { names: { 'es-ES': "Pulsera de cuero con grabado personalizado 📝" }, link: "https://s.click.aliexpress.com/e/_oDu9Pth" },
-    { names: { 'es-ES': "Collar con proyección de 'Te amo' en 100 idiomas 🌍" }, link: "https://s.click.aliexpress.com/e/_opMGBcR" },
+    { names: { 'es-ES': "Pantuflas peluche mujer invierno 2024 ❄️" }, link: "https://s.click.aliexpress.com/e/_oFsMUoj" },
+    { names: { 'es-ES': "Rosa negra con luz nocturna DIY 🌹✨" }, link: "https://s.click.aliexpress.com/e/_olHebLN" },
+    { names: { 'es-ES': "Conjunto de pijama de lana acanalada 2025 🛌" }, link: "https://s.click.aliexpress.com/e/_oBSBvjl" },
+    { names: { 'es-ES': "Anillo moissanita 3.5mm plata 925 💍" }, link: "https://s.click.aliexpress.com/e/_ol4Qgrp" },
+    { names: { 'es-ES': "Molde de silicona corazón para postres ❤️🍫" }, link: "https://s.click.aliexpress.com/e/_ookux5p" },
+    { names: { 'es-ES': "Bloques rosas eternas 3D Día San Valentín 🌹🧱" }, link: "https://s.click.aliexpress.com/e/_onVPIjD" },
+    { names: { 'es-ES': "Conjunto anillos circonia cúbica lujo 💎" }, link: "https://s.click.aliexpress.com/e/_onAupaj" },
+    { names: { 'es-ES': "Camisón satinado labios rojos 💋" }, link: "https://s.click.aliexpress.com/e/_omZKxhZ" },
+    { names: { 'es-ES': "Bloques rosas eternas 3D Día San Valentín 🌹🧱" }, link: "https://s.click.aliexpress.com/e/_opPZdDZ" },
+    { names: { 'es-ES': "Pijama franela rayas invierno mujer 🐻" }, link: "https://s.click.aliexpress.com/e/_oDu9Pth" },
+    { names: { 'es-ES': "Mini rosa eterna DIY regalo pareja 🌸" }, link: "https://s.click.aliexpress.com/e/_opMGBcR" },
 ];
 
   const $ = id => document.getElementById(id);
