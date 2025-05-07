@@ -49,11 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const affiliateProductsEN = [
-    { names: { 'en-US': "100 Date Ideas Scratch Poster 🧡" }, link: "https://www.amazon.com/dp/B081V6W99F?tag=yourtag-20" },
-    { names: { 'en-US': "Funny Couple Mug Set ☕" }, link: "https://www.amazon.com/dp/B08KFLN3LZ?tag=yourtag-20" },
-    { names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=yourtag-20" },
-    { names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=yourtag-20" },
-    { names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=yourtag-20" }
+    { names: { 'en-US': "100 Date Ideas Scratch Poster 🧡" }, link: "https://www.amazon.com/dp/B081V6W99F?tag=flirtspark09-20" },
+    { names: { 'en-US': "Funny Couple Mug Set ☕" }, link: "https://www.amazon.com/dp/B08KFLN3LZ?tag=flirtspark09-20" },
+    { names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20" },
+    { names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20" },
+    { names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20" },
+    { names: { 'en-US': "100 Date Ideas Scratch Poster 🧡" }, link: "https://www.amazon.com/dp/B09TDGTRBH?tag=flirtspark09-20"},
+    {names: { 'en-US': "Funny Couple Mug Set ☕" }, link: "https://www.amazon.com/dp/B08KFLN3LZ?tag=flirtspark09-20"},
+    {names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20"},
+    {names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20"},
+    {names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20"}
   ];
 
   const $ = id => document.getElementById(id);
