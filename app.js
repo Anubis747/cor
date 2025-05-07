@@ -54,17 +54,30 @@ document.addEventListener('DOMContentLoaded', () => {
     { names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20" },
     { names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20" },
     { names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20" },
-    { names: { 'en-US': "100 Date Ideas Scratch Poster 🧡" }, link: "https://www.amazon.com/dp/B09TDGTRBH?tag=flirtspark09-20"},
-    {names: { 'en-US': "Funny Couple Mug Set ☕" }, link: "https://www.amazon.com/dp/B08KFLN3LZ?tag=flirtspark09-20"},
-    {names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20"},
-    {names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20"},
-    {names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20"},
-    {names: { 'en-US': "Couples Conversation Cards 💬" }, link: "https://www.amazon.com/dp/B07Z5Z5RZ5?tag=flirtspark09-20"},
-    {names: { 'en-US': "Romantic Bath Bomb Gift Set 🛁" },l ink: "https://www.amazon.com/dp/B07Y5P9QJ9?tag=flirtspark09-20"},
-    {names: { 'en-US': "His & Hers Pillowcases 😴" }, link: "https://www.amazon.com/dp/B07Y5N653J?tag=flirtspark09-20"},
-    {names: { 'en-US': "Date Night Jar with Ideas 🎲" }, link: "https://www.amazon.com/dp/B07Y5MRDWF?tag=flirtspark09-20"},
-    {names: { 'en-US': "Matching Bracelets for Couples 💑" }, link: "https://www.amazon.com/dp/B07Y5MGDBQ?tag=flirtspark09-20"}
+    { names: { 'en-US': "100 Date Ideas Scratch Poster 🧡" }, link: "https://www.amazon.com/dp/B09TDGTRBH?tag=flirtspark09-20" },
+    { names: { 'en-US': "Funny Couple Mug Set ☕" }, link: "https://www.amazon.com/dp/B08KFLN3LZ?tag=flirtspark09-20" },
+    { names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20" },
+    { names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20" },
+    { names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20" },
+    { names: { 'en-US': "Couples Conversation Cards 💬" }, link: "https://www.amazon.com/dp/B07Z5Z5RZ5?tag=flirtspark09-20" },
+    { names: { 'en-US': "Romantic Bath Bomb Gift Set 🛁" },link: "https://www.amazon.com/dp/B07Y5P9QJ9?tag=flirtspark09-20" },
+    { names: { 'en-US': "His & Hers Pillowcases 😴" }, link: "https://www.amazon.com/dp/B07Y5N653J?tag=flirtspark09-20" },
+    { names: { 'en-US': "Date Night Jar with Ideas 🎲" }, link: "https://www.amazon.com/dp/B07Y5MRDWF?tag=flirtspark09-20" },
+    { names: { 'en-US': "Matching Bracelets for Couples 💑" }, link: "https://www.amazon.com/dp/B07Y5MGDBQ?tag=flirtspark09-20" }
   ];
+  const affiliateProductsES = [
+    { names: { 'es-ES': "Collar de rosa eterna 🌹" }, link: "https://s.click.aliexpress.com/e/_oFsMUoj" },
+    { names: { 'es-ES': "Anillo de compromiso con zirconia cúbica 💍" }, link: "https://s.click.aliexpress.com/e/_olHebLN" },
+    { names: { 'es-ES': "Pulsera de pareja magnética con corazón ❤️" }, link: "https://s.click.aliexpress.com/e/_oBSBvjl" },
+    { names: { 'es-ES': "Caja de regalo con flores y luz LED 🎁" }, link: "https://s.click.aliexpress.com/e/_ol4Qgrp" },
+    { names: { 'es-ES': "Lámpara de luna 3D con base de madera 🌕" }, link: "https://s.click.aliexpress.com/e/_ookux5p" },
+    { names: { 'es-ES': "Taza mágica que revela mensaje de amor ☕" }, link: "https://s.click.aliexpress.com/e/_onVPIjD" },
+    { names: { 'es-ES': "Peluches de pareja abrazados 🧸" }, link: "https://s.click.aliexpress.com/e/_onAupaj" },
+    { names: { 'es-ES': "Llaveros de pareja con imán de corazón 🔑" }, link: "https://s.click.aliexpress.com/e/_omZKxhZ" },
+    { names: { 'es-ES': "Caja de música con diseño de corazón 🎶" }, link: "https://s.click.aliexpress.com/e/_opPZdDZ" },
+    { names: { 'es-ES': "Pulsera de cuero con grabado personalizado 📝" }, link: "https://s.click.aliexpress.com/e/_oDu9Pth" },
+    { names: { 'es-ES': "Collar con proyección de 'Te amo' en 100 idiomas 🌍" }, link: "https://s.click.aliexpress.com/e/_opMGBcR" },
+];
 
   const $ = id => document.getElementById(id);
   const introEl = $('intro');
@@ -193,12 +206,14 @@ document.addEventListener('DOMContentLoaded', () => {
   currentLang = browserLang;
 
   if (currentLang === 'pt-BR') {
-    affiliateProducts = affiliateProductsBR;
-  } else if (currentLang === 'en-US') {
-    affiliateProducts = affiliateProductsEN;
-  } else {
-    affiliateProducts = [];
-  }
+  affiliateProducts = affiliateProductsBR;
+} else if (currentLang === 'en-US') {
+  affiliateProducts = affiliateProductsEN;
+} else if (currentLang === 'es-ES') {
+  affiliateProducts = affiliateProductsES;
+} else {
+  affiliateProducts = [];
+}
 
   loadLanguageData(currentLang);
   updateCarousel();
