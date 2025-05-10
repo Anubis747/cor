@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load pick-up lines JSON
   function loadLanguageData(langCode) {
-    const basePath = window.location.pathname.replace(/\\/[^/]*$/, '/');
+    const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
     const file = `${basePath}lines_${langCode.slice(0, 2)}.json`;
     fetch(file)
       .then(res => res.ok ? res.json() : Promise.reject())
