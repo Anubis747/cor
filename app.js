@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded — app.js iniciou');
+
   // Multilingual content for various sections
   const data = {
     'en-US': {
@@ -265,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial load
   updateUI();
+  console.log('updateUI rodou para', currentLang);
   loadLanguageData(currentLang);
   setInterval(updateCarousel, 4000);
 });
