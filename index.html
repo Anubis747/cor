@@ -2,6 +2,7 @@
 <html lang="en-US">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cheesy or Not? 🧀❤️❤</title>
   <link rel="stylesheet" href="style.css">
 
@@ -21,21 +22,16 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9273959048665563" crossorigin="anonymous"></script>
 
   <!-- Favicon Emoji -->
-  <link rel="icon" href="data:image/svg+xml,
-    <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
-      <text y=%22.9em%22 font-size=%2280%22>❤️</text>
-    </svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>❤️</text></svg>">
 
-  <!-- FontAwesome for icons -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <main>
     <h1>Cheesy or Not? 🧀❤️</h1>
 
-    <!-- Short multilingual site description -->
-    <p id="siteDescription" style="text-align: center; max-width: 600px; margin: 0 auto 1.5rem; font-size: 1rem;"></p>
+    <p id="siteDescription" class="intro"></p>
 
     <div class="card">
       <p id="intro" class="intro"></p>
@@ -49,20 +45,34 @@
     </div>
 
     <section id="affiliate" class="affiliate">
-      <h2 id="affTitle">Surprise with a gift! 🎁</h2>
+      <h2 id="affTitle"></h2>
       <div class="carousel" id="carousel"></div>
     </section>
 
+    <section id="about" class="card">
+      <h2 id="aboutHeading"></h2>
+      <p id="aboutText"></p>
+    </section>
+
+    <section id="how-it-works" class="card">
+      <h2 id="howHeading"></h2>
+      <ol id="howList"></ol>
+    </section>
+
+    <section id="use-cases" class="card">
+      <h2 id="useHeading"></h2>
+      <ul id="useList"></ul>
+    </section>
+
     <div class="coffee-placeholder">
-      <p id="bmcText">Support us with a coffee ☕</p>
+      <p id="bmcText"></p>
       <a href="https://www.buymeacoffee.com/liveordead" target="_blank" rel="noopener">
-        <img src="https://img.buymeacoffee.com/button-api/?text=Support us!!&emoji=&slug=liveordead&button_colour=FF5F5F&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00"
-          alt="Buy Me a Coffee Button" />
+        <img src="https://img.buymeacoffee.com/button-api/?text=Support us!!&emoji=&slug=liveordead&button_colour=FF5F5F&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" alt="Buy Me a Coffee Button">
       </a>
     </div>
 
     <div class="lang-switch">
-      <label for="langSelect" id="langLabel">Choose another language:</label>
+      <label for="langSelect" id="langLabel"></label>
       <select id="langSelect">
         <option value="en-US">English</option>
         <option value="pt-BR">Português</option>
@@ -70,30 +80,12 @@
       </select>
     </div>
 
-    <footer style="text-align: center; margin-top: 2rem; font-size: 0.9rem;">
+    <footer>
       <a href="terms.html">Terms of Use</a> |
       <a href="privacy.html">Privacy Policy</a>
     </footer>
   </main>
 
   <script src="app.js" defer></script>
-  <script>
-    // multilingual short description
-    const descriptions = {
-      'en-US': "Generate cheesy (but charming) pick-up lines and find the perfect gift to match.",
-      'pt-BR': "Gere cantadas vergonhosas (mas divertidas) e descubra o presente ideal pra acompanhar.",
-      'es-ES': "Genera frases cursis (pero con encanto) y encuentra el regalo perfecto para acompañar."
-    };
-    document.addEventListener('DOMContentLoaded', () => {
-      const lang = new URLSearchParams(window.location.search).get('lang') ||
-                   (navigator.language.startsWith('pt') ? 'pt-BR'
-                   : navigator.language.startsWith('es') ? 'es-ES'
-                   : 'en-US');
-      const el = document.getElementById('siteDescription');
-      if (el && descriptions[lang]) {
-        el.textContent = descriptions[lang];
-      }
-    });
-  </script>
 </body>
 </html>
