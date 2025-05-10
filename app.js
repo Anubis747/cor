@@ -54,17 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
     { names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20" },
     { names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20" },
     { names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20" },
-    { names: { 'en-US': "100 Date Ideas Scratch Poster 🧡" }, link: "https://www.amazon.com/dp/B09TDGTRBH?tag=flirtspark09-20" },
-    { names: { 'en-US': "Funny Couple Mug Set ☕" }, link: "https://www.amazon.com/dp/B08KFLN3LZ?tag=flirtspark09-20" },
-    { names: { 'en-US': "Love Coupons for Him & Her 💌" }, link: "https://www.amazon.com/dp/B0763H38ZD?tag=flirtspark09-20" },
-    { names: { 'en-US': "Mini Projector for Date Night 📽️" }, link: "https://www.amazon.com/dp/B09R1HNNB6?tag=flirtspark09-20" },
-    { names: { 'en-US': "Heart-Shaped Waffle Maker ❤️" }, link: "https://www.amazon.com/dp/B01N6DC2ZE?tag=flirtspark09-20" },
     { names: { 'en-US': "Couples Conversation Cards 💬" }, link: "https://www.amazon.com/dp/B07Z5Z5RZ5?tag=flirtspark09-20" },
-    { names: { 'en-US': "Romantic Bath Bomb Gift Set 🛁" },link: "https://www.amazon.com/dp/B07Y5P9QJ9?tag=flirtspark09-20" },
+    { names: { 'en-US': "Romantic Bath Bomb Gift Set 🛁" }, link: "https://www.amazon.com/dp/B07Y5P9QJ9?tag=flirtspark09-20" },
     { names: { 'en-US': "His & Hers Pillowcases 😴" }, link: "https://www.amazon.com/dp/B07Y5N653J?tag=flirtspark09-20" },
     { names: { 'en-US': "Date Night Jar with Ideas 🎲" }, link: "https://www.amazon.com/dp/B07Y5MRDWF?tag=flirtspark09-20" },
     { names: { 'en-US': "Matching Bracelets for Couples 💑" }, link: "https://www.amazon.com/dp/B07Y5MGDBQ?tag=flirtspark09-20" }
   ];
+
   const affiliateProductsES = [
     { names: { 'es-ES': "Pantuflas peluche mujer invierno 2024 ❄️" }, link: "https://s.click.aliexpress.com/e/_oFsMUoj" },
     { names: { 'es-ES': "Rosa negra con luz nocturna DIY 🌹✨" }, link: "https://s.click.aliexpress.com/e/_olHebLN" },
@@ -74,10 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
     { names: { 'es-ES': "Bloques rosas eternas 3D Día San Valentín 🌹🧱" }, link: "https://s.click.aliexpress.com/e/_onVPIjD" },
     { names: { 'es-ES': "Conjunto anillos circonia cúbica lujo 💎" }, link: "https://s.click.aliexpress.com/e/_onAupaj" },
     { names: { 'es-ES': "Camisón satinado labios rojos 💋" }, link: "https://s.click.aliexpress.com/e/_omZKxhZ" },
-    { names: { 'es-ES': "Bloques rosas eternas 3D Día San Valentín 🌹🧱" }, link: "https://s.click.aliexpress.com/e/_opPZdDZ" },
     { names: { 'es-ES': "Pijama franela rayas invierno mujer 🐻" }, link: "https://s.click.aliexpress.com/e/_oDu9Pth" },
-    { names: { 'es-ES': "Mini rosa eterna DIY regalo pareja 🌸" }, link: "https://s.click.aliexpress.com/e/_opMGBcR" },
-];
+    { names: { 'es-ES': "Mini rosa eterna DIY regalo pareja 🌸" }, link: "https://s.click.aliexpress.com/e/_opMGBcR" }
+  ];
 
   const $ = id => document.getElementById(id);
   const introEl = $('intro');
@@ -146,12 +141,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.ok ? res.json() : Promise.reject(`Failed to load ${file}`))
       .then(data => {
         linesArray = Array.isArray(data.lines) ? data.lines : ["Oops! Couldn't load pickup lines."];
-        commentsArray = Array.isArray(data.comments) ? data.comments : [""];
+        commentsArray = Array.isArray(data.comments) ? data.comments : [''];
         updateUI();
       })
       .catch(() => {
         linesArray = ["Oops! Couldn't load pickup lines."];
-        commentsArray = [""];
+        commentsArray = [''];
         updateUI();
       });
   }
@@ -206,14 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
   currentLang = browserLang;
 
   if (currentLang === 'pt-BR') {
-  affiliateProducts = affiliateProductsBR;
-} else if (currentLang === 'en-US') {
-  affiliateProducts = affiliateProductsEN;
-} else if (currentLang === 'es-ES') {
-  affiliateProducts = affiliateProductsES;
-} else {
-  affiliateProducts = [];
-}
+    affiliateProducts = affiliateProductsBR;
+  } else if (currentLang === 'en-US') {
+    affiliateProducts = affiliateProductsEN;
+  } else if (currentLang === 'es-ES') {
+    affiliateProducts = affiliateProductsES;
+  } else {
+    affiliateProducts = [];
+  }
 
   loadLanguageData(currentLang);
   updateCarousel();
