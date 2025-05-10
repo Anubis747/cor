@@ -266,4 +266,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial load
   updateUI();
   loadLanguageData(currentLang);
-  setInterval(update
+  setInterval(updateCarousel, 4000);
+});
