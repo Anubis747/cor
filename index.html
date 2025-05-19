@@ -6,18 +6,18 @@
   <title>Cheesy or Not? 🧀❤️❤</title>
   <link rel="stylesheet" href="style.css">
 
-<meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src  'self' 'unsafe-inline' https:;
-  connect-src 'self' https:;
-  img-src     'self' data: https:;
-  style-src   'self' 'unsafe-inline' https:;
-  font-src    'self' https:;
-  frame-src   'self' https:;
-  object-src  'none';
-  base-uri    'self';
-  form-action 'self';
-">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src  'self' 'unsafe-inline' https:;
+    connect-src 'self' https:;
+    img-src     'self' data: https:;
+    style-src   'self' 'unsafe-inline' https:;
+    font-src    'self' https:;
+    frame-src   'self' https:;
+    object-src  'none';
+    base-uri    'self';
+    form-action 'self';
+  ">
 
   <!-- AdSense Auto-Ads -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9273959048665563" crossorigin="anonymous"></script>
@@ -27,10 +27,54 @@
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #ff5f5f;
+      border-radius: 12px;
+      max-width: 90%;
+      font-weight: bold;
+    }
+    .nav-tabs a {
+      color: white;
+      text-decoration: none;
+    }
+    .nav-tabs a:hover {
+      text-decoration: underline;
+    }
+    .contact {
+      text-align: center;
+      font-size: 0.9rem;
+      margin: 2rem 0;
+    }
+    .contact a {
+      color: #4a90e2;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <main>
     <h1>Cheesy or Not? 🧀❤️</h1>
+
+    <div class="nav-tabs">
+      <a href="index.html" id="navHome">Home</a>
+      <a href="about.html" id="navAbout">About</a>
+      <a href="how.html" id="navHow">How it Works</a>
+      <a href="use-cases.html" id="navUses">Use Cases</a>
+      <a href="terms.html" id="navTerms">Terms</a>
+      <a href="privacy.html" id="navPrivacy">Privacy</a>
+      <a href="mailto:contact@flirtspark.cc" id="navContact">Contact</a>
+    </div>
 
     <p id="siteDescription" class="intro"></p>
 
@@ -48,21 +92,6 @@
     <section id="affiliate" class="affiliate">
       <h2 id="affTitle"></h2>
       <div class="carousel" id="carousel"></div>
-    </section>
-
-    <section id="about" class="card">
-      <h2 id="aboutHeading"></h2>
-      <p id="aboutText"></p>
-    </section>
-
-    <section id="how-it-works" class="card">
-      <h2 id="howHeading"></h2>
-      <ol id="howList"></ol>
-    </section>
-
-    <section id="use-cases" class="card">
-      <h2 id="useHeading"></h2>
-      <ul id="useList"></ul>
     </section>
 
     <div class="coffee-placeholder">
@@ -83,11 +112,11 @@
 
     <footer>
       <a href="terms.html">Terms of Use</a> |
-      <a href="privacy.html">Privacy Policy</a>
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="mailto:contact@flirtspark.cc" id="footerContact">Contact Us</a>
     </footer>
   </main>
 
   <script src="app.js"></script>
-
 </body>
 </html>
