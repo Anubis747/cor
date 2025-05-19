@@ -1,77 +1,101 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // Multilingual content for various sections
-  const data = {
-    'en-US': {
-      siteDesc: "Generate cheesy (but charming) pick-up lines and find the perfect gift to match.",
-      intro: "Click to generate a cheesy pick-up line!",
-      generate: "Generate",
-      initial: "Ready for a pick-up line?",
-      langLabel: "Choose another language:",
-      affTitle: "Surprise with a gift! 🎁",
-      bmcText: "Support us with a coffee ☕",
-      aboutHeading: "About Cheesy or Not?",
-      aboutText: "At Cheesy or Not? we blend humor and gift-giving to make your chats unforgettable. Click to generate a fresh pick-up line, then scroll down for hand-picked gift ideas that match the tone. No forms, no fees—just fun and charm in one place!",
-      howHeading: "How It Works",
-      howList: [
-        "<strong>Generate:</strong> click “Generate” to get a fresh pick-up line.",
-        "<strong>Browse Gifts:</strong> our carousel shows gifts that fit the tone.",
-        "<strong>Share or Shop:</strong> copy the line or click through to buy the perfect present."
-      ],
-      useHeading: "Use Cases",
-      useList: [
-        "Perfect for Valentine’s Day messages.",
-        "Great ice-breaker at parties and events.",
-        "Fun way to send birthday greetings."
-      ]
-    },
-    'pt-BR': {
-      siteDesc: "Gere cantadas vergonhosas (mas divertidas) e descubra o presente ideal para acompanhar.",
-      intro: "Clique para gerar uma cantada!",
-      generate: "Gerar cantada",
-      initial: "Que tal uma cantada divertida?",
-      langLabel: "Escolha outro idioma:",
-      affTitle: "Surpreenda com um presente! 🎁",
-      bmcText: "Nos apoie com um café ☕",
-      aboutHeading: "Sobre o Cheesy or Not?",
-      aboutText: "No Cheesy or Not? unimos humor e presentes para tornar suas conversas inesquecíveis. Clique para gerar uma nova cantada e, em seguida, explore nossa seleção de presentes que combinam com o tom da mensagem. Sem formulários, sem taxas—apenas diversão e charme em um só lugar!",
-      howHeading: "Como Funciona",
-      howList: [
-        "<strong>Gerar:</strong> clique em 'Gerar cantada' para receber uma frase única.",
-        "<strong>Ver Presentes:</strong> nosso carrossel mostra sugestões que combinam.",
-        "<strong>Compartilhar ou Comprar:</strong> copie a cantada ou clique para adquirir o presente ideal."
-      ],
-      useHeading: "Sugestões de Uso",
-      useList: [
-        "Perfeito para mensagens no Dia dos Namorados.",
-        "Ótimo para quebrar o gelo em festas e eventos.",
-        "Jeito divertido de enviar felicitações de aniversário."
-      ]
-    },
-    'es-ES': {
-      siteDesc: "Genera frases cursis (pero con encanto) y encuentra el regalo perfecto para acompañar.",
-      intro: "¡Haz clic para una frase divertida!",
-      generate: "Generar frase",
-      initial: "¿Listo para sonreír?",
-      langLabel: "Elige otro idioma:",
-      affTitle: "¡Sorprende con un regalo! 🎁",
-      bmcText: "Apóyanos con un café ☕",
-      aboutHeading: "Acerca de Cheesy or Not?",
-      aboutText: "En Cheesy or Not? combinamos humor y regalos para hacer tus conversaciones inolvidables. Haz clic para generar una frase divertida y luego explora nuestra selección de regalos acorde al tono. Sin formularios, sin costos—¡solo diversión y encanto en un solo lugar!",
-      howHeading: "Cómo Funciona",
-      howList: [
-        "<strong>Generar:</strong> haz clic en 'Generar frase' para recibir una línea única.",
-        "<strong>Ver Regalos:</strong> nuestro carrusel muestra sugerencias que encajan.",
-        "<strong>Compartir o Comprar:</strong> copia la frase o haz clic para adquirir el regalo perfecto."
-      ],
-      useHeading: "Casos de Uso",
-      useList: [
-        "Perfecto para mensajes de San Valentín.",
-        "Ideal para romper el hielo en fiestas y eventos.",
-        "Manera divertida de enviar felicitaciones de cumpleaños."
-      ]
+const data = {
+  'en-US': {
+    siteDesc: "Generate cheesy (but charming) pick-up lines and find the perfect gift to match.",
+    intro: "Click to generate a cheesy pick-up line!",
+    generate: "Generate",
+    initial: "Ready for a pick-up line?",
+    langLabel: "Choose another language:",
+    affTitle: "Surprise with a gift! 🎁",
+    bmcText: "Support us with a coffee ☕",
+    aboutHeading: "About Cheesy or Not?",
+    aboutText: "At Cheesy or Not? we blend humor and gift-giving to make your chats unforgettable. Click to generate a fresh pick-up line, then scroll down for hand-picked gift ideas that match the tone. No forms, no fees—just fun and charm in one place!",
+    howHeading: "How It Works",
+    howList: [
+      "<strong>Generate:</strong> click “Generate” to get a fresh pick-up line.",
+      "<strong>Browse Gifts:</strong> our carousel shows gifts that fit the tone.",
+      "<strong>Share or Shop:</strong> copy the line or click through to buy the perfect present."
+    ],
+    useHeading: "Use Cases",
+    useList: [
+      "Perfect for Valentine’s Day messages.",
+      "Great ice-breaker at parties and events.",
+      "Fun way to send birthday greetings."
+    ],
+    menu: {
+      navHome: "Home",
+      navAbout: "About",
+      navHow: "How it Works",
+      navTerms: "Terms",
+      navPrivacy: "Privacy",
+      navContact: "Contact"
     }
-  };
+  },
+  'pt-BR': {
+    siteDesc: "Gere cantadas vergonhosas (mas divertidas) e descubra o presente ideal para acompanhar.",
+    intro: "Clique para gerar uma cantada!",
+    generate: "Gerar cantada",
+    initial: "Que tal uma cantada divertida?",
+    langLabel: "Escolha outro idioma:",
+    affTitle: "Surpreenda com um presente! 🎁",
+    bmcText: "Nos apoie com um café ☕",
+    aboutHeading: "Sobre o Cheesy or Not?",
+    aboutText: "No Cheesy or Not? unimos humor e presentes para tornar suas conversas inesquecíveis. Clique para gerar uma nova cantada e, em seguida, explore nossa seleção de presentes que combinam com o tom da mensagem. Sem formulários, sem taxas—apenas diversão e charme em um só lugar!",
+    howHeading: "Como Funciona",
+    howList: [
+      "<strong>Gerar:</strong> clique em 'Gerar cantada' para receber uma frase única.",
+      "<strong>Ver Presentes:</strong> nosso carrossel mostra sugestões que combinam.",
+      "<strong>Compartilhar ou Comprar:</strong> copie a cantada ou clique para adquirir o presente ideal."
+    ],
+    useHeading: "Sugestões de Uso",
+    useList: [
+      "Perfeito para mensagens no Dia dos Namorados.",
+      "Ótimo para quebrar o gelo em festas e eventos.",
+      "Jeito divertido de enviar felicitações de aniversário."
+    ],
+    menu: {
+      navHome: "Início",
+      navAbout: "Sobre",
+      navHow: "Como Funciona",
+      navTerms: "Termos",
+      navPrivacy: "Privacidade",
+      navContact: "Contato"
+    }
+  },
+  'es-ES': {
+    siteDesc: "Genera frases cursis (pero con encanto) y encuentra el regalo perfecto para acompañar.",
+    intro: "¡Haz clic para una frase divertida!",
+    generate: "Generar frase",
+    initial: "¿Listo para sonreír?",
+    langLabel: "Elige otro idioma:",
+    affTitle: "¡Sorprende con un regalo! 🎁",
+    bmcText: "Apóyanos con un café ☕",
+    aboutHeading: "Acerca de Cheesy or Not?",
+    aboutText: "En Cheesy or Not? combinamos humor y regalos para hacer tus conversaciones inolvidables. Haz clic para generar una frase divertida y luego explora nuestra selección de regalos acorde al tono. Sin formularios, sin costos—¡solo diversión y encanto en un solo lugar!",
+    howHeading: "Cómo Funciona",
+    howList: [
+      "<strong>Generar:</strong> haz clic en 'Generar frase' para recibir una línea única.",
+      "<strong>Ver Regalos:</strong> nuestro carrusel muestra sugerencias que encajan.",
+      "<strong>Compartir o Comprar:</strong> copia la frase o haz clic para adquirir el regalo perfecto."
+    ],
+    useHeading: "Casos de Uso",
+    useList: [
+      "Perfecto para mensajes de San Valentín.",
+      "Ideal para romper el hielo en fiestas y eventos.",
+      "Manera divertida de enviar felicitaciones de cumpleaños."
+    ],
+    menu: {
+      navHome: "Inicio",
+      navAbout: "Acerca de",
+      navHow: "Cómo Funciona",
+      navTerms: "Términos",
+      navPrivacy: "Privacidad",
+      navContact: "Contacto"
+    }
+  }
+};
 
   // Affiliate product lists
   const affiliateProductsBR = [
@@ -245,8 +269,13 @@ function updateUI() {
   if (aboutTextEl) aboutTextEl.textContent = cfg.aboutText;
   if (howHeadingEl) howHeadingEl.textContent = cfg.howHeading;
   if (howListEl) howListEl.innerHTML = cfg.howList.map(item => `<li>${item}</li>`).join('');
-  if (useHeadingEl) useHeadingEl.textContent = cfg.useHeading;
-  if (useListEl) useListEl.innerHTML = cfg.useList.map(item => `<li>${item}</li>`).join('');
+
+  if (cfg.menu) {
+    for (const [id, label] of Object.entries(cfg.menu)) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = label;
+    }
+  }
 
   if (currentLang === 'pt-BR') affiliateProducts = affiliateProductsBR;
   else if (currentLang === 'es-ES') affiliateProducts = affiliateProductsES;
