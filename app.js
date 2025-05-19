@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOMContentLoaded — app.js iniciou');
 
   // Multilingual content for various sections
   const data = {
@@ -232,38 +231,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Update all UI elements
-  function updateUI() {
-    const cfg = data[currentLang];
-    siteDescription.textContent = cfg.siteDesc;
-    introEl.textContent        = cfg.intro;
-    lineEl.textContent         = cfg.initial;
-    generateBtn.textContent    = cfg.generate;
-    langLabelEl.textContent    = cfg.langLabel;
-    affTitleEl.textContent     = cfg.affTitle;
-    bmcTextEl.textContent      = cfg.bmcText;
-    aboutHeadingEl.textContent = cfg.aboutHeading;
-    aboutTextEl.textContent    = cfg.aboutText;
-    howHeadingEl.textContent   = cfg.howHeading;
-    howListEl.innerHTML        = cfg.howList.map(item => `<li>${item}</li>`).join('');
-    useHeadingEl.textContent   = cfg.useHeading;
-    useListEl.innerHTML        = cfg.useList.map(item => `<li>${item}</li>`).join('');
+function updateUI() {
+  const cfg = data[currentLang];
 
-    // Set affiliate products array
-    if (currentLang === 'pt-BR') affiliateProducts = affiliateProductsBR;
-    else if (currentLang === 'es-ES') affiliateProducts = affiliateProductsES;
-    else affiliateProducts = affiliateProductsEN;
+  if (siteDescription) siteDescription.textContent = cfg.siteDesc;
+  if (introEl) introEl.textContent = cfg.intro;
+  if (lineEl) lineEl.textContent = cfg.initial;
+  if (generateBtn) generateBtn.textContent = cfg.generate;
+  if (langLabelEl) langLabelEl.textContent = cfg.langLabel;
+  if (affTitleEl) affTitleEl.textContent = cfg.affTitle;
+  if (bmcTextEl) bmcTextEl.textContent = cfg.bmcText;
+  if (aboutHeadingEl) aboutHeadingEl.textContent = cfg.aboutHeading;
+  if (aboutTextEl) aboutTextEl.textContent = cfg.aboutText;
+  if (howHeadingEl) howHeadingEl.textContent = cfg.howHeading;
+  if (howListEl) howListEl.innerHTML = cfg.howList.map(item => `<li>${item}</li>`).join('');
+  if (useHeadingEl) useHeadingEl.textContent = cfg.useHeading;
+  if (useListEl) useListEl.innerHTML = cfg.useList.map(item => `<li>${item}</li>`).join('');
 
-    // Initialize carousel
-    updateCarousel();
-  }
+  if (currentLang === 'pt-BR') affiliateProducts = affiliateProductsBR;
+  else if (currentLang === 'es-ES') affiliateProducts = affiliateProductsES;
+  else affiliateProducts = affiliateProductsEN;
+
+  if (carouselEl) updateCarousel();
+}
 
   // Event listeners
-  generateBtn.addEventListener('click', handleGenerateClick);
-  copyIcon.addEventListener('click', () => copyText(lineEl.textContent));
-  shareIcon.addEventListener('click', () => shareText(lineEl.textContent));
-  selectEl.addEventListener('change', () => {
-    window.location.search = `?lang=${selectEl.value}`;
-  });
+if (generateBtn) generateBtn.addEventListener('click', handleGenerateClick);
+if (copyIcon) copyIcon.addEventListener('click', () => copyText(lineEl?.textContent || ''));
+if (shareIcon) shareIcon.addEventListener('click', () => shareText(lineEl?.textContent || ''));
+if (selectEl) selectEl.addEventListener('change', () => {
+  window.location.search = `?lang=${selectEl.value}`;
+});
 
   // Initial load
   updateUI();
