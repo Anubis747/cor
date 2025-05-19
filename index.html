@@ -72,6 +72,18 @@
         <option value="en-US">English</option>
         <option value="pt-BR">Português</option>
         <option value="es-ES">Español</option>
+        <script>
+  const langSelect = document.getElementById('langSelect');
+  const aboutLink = document.getElementById('navAbout');
+
+  const baseLang = (langSelect.value || 'en-US').slice(0, 2);
+  if (aboutLink) aboutLink.href = `about.html?lang=${baseLang}`;
+
+  langSelect.addEventListener('change', () => {
+    const lang = langSelect.value.slice(0, 2);
+    if (aboutLink) aboutLink.href = `about.html?lang=${lang}`;
+  });
+</script>
       </select>
     </div>
   </main>
