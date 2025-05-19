@@ -21,6 +21,9 @@ main {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .intro {
@@ -136,4 +139,29 @@ button:hover {
 #use-cases li {
   margin-bottom: 0.5rem;
   line-height: 1.4;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #ff5f5f;
+  border-radius: 12px;
+  max-width: 90%;
+  font-weight: bold;
+}
+.nav-tabs a {
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  padding: 0.25rem 0.75rem;
+  border-radius: 5px;
+}
+.nav-tabs a:hover {
+  background-color: #ff7a7a;
+  color: white;
 }
