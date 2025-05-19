@@ -17,15 +17,6 @@
       <a href="mailto:contact@flirtspark.cc">Contact</a>
     </div>
 
-    <div class="lang-switch">
-      <label for="langSelect">Choose another language:</label>
-      <select id="langSelect">
-        <option value="en">English</option>
-        <option value="pt">Português</option>
-        <option value="es">Español</option>
-      </select>
-    </div>
-
     <div class="card" id="aboutContainer">
       <h1 id="aboutTitle">Loading...</h1>
       <div id="aboutContent"></div>
@@ -33,32 +24,25 @@
   </main>
 
   <script>
-    const langSelect = document.getElementById('langSelect');
-    const aboutTitle = document.getElementById('aboutTitle');
-    const aboutContent = document.getElementById('aboutContent');
+    const lang = new URLSearchParams(window.location.search).get('lang') || 
+             (navigator.language.startsWith('pt') ? 'pt' :
+              navigator.language.startsWith('es') ? 'es' : 'en');
 
-    const urlLang = new URLSearchParams(window.location.search).get('lang');
-    const currentLang = urlLang || (navigator.language.startsWith('pt') ? 'pt' : navigator.language.startsWith('es') ? 'es' : 'en');
-    langSelect.value = currentLang;
-
-    langSelect.addEventListener('change', () => {
-      window.location.search = `?lang=${langSelect.value}`;
+fetch(`about/${lang}.json`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('aboutTitle').textContent = data.title;
+    const content = document.getElementById('aboutContent');
+    data.paragraphs.forEach(p => {
+      const para = document.createElement('p');
+      para.textContent = p;
+      content.appendChild(para);
     });
-
-    fetch(`about/${currentLang}.json`)
-      .then(res => res.json())
-      .then(data => {
-        aboutTitle.textContent = data.title;
-        data.paragraphs.forEach(p => {
-          const para = document.createElement('p');
-          para.textContent = p;
-          aboutContent.appendChild(para);
-        });
-      })
-      .catch(() => {
-        aboutTitle.textContent = 'Content not available';
-        aboutContent.innerHTML = '<p>Sorry, we couldn’t load the content.</p>';
-      });
+  })
+  .catch(() => {
+    document.getElementById('aboutTitle').textContent = 'Content not available';
+    document.getElementById('aboutContent').innerHTML = '<p>Sorry, we couldn’t load the content.</p>';
+  });
   </script>
 </body>
 </html>
