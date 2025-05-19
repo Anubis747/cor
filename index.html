@@ -31,6 +31,7 @@
   <style>
     .nav-tabs {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
       margin: 2rem auto;
@@ -59,6 +60,18 @@
     }
     .contact a:hover {
       text-decoration: underline;
+    }
+    .card {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    @media (max-width: 600px) {
+      .card {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
