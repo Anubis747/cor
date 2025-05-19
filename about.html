@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About - FlirtSpark</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <main>
-    <h1>About FlirtSpark</h1>
-
     <div class="nav-tabs">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -20,13 +17,32 @@
       <a href="mailto:contact@flirtspark.cc">Contact</a>
     </div>
 
-    <div class="card">
-      <p><strong>FlirtSpark</strong> is a playful and lighthearted platform designed to bring smiles and spark connections through creative pick-up lines.</p>
-      <p>Whether you're flirting for fun, breaking the ice, or just curious to see what cheesy gems the internet can offer, FlirtSpark has you covered.</p>
-      <p>No accounts, no pressure — just one click to generate a random line and share the fun.</p>
-      <p>We believe in humor, creativity, and spontaneity. Some lines are sweet, some are outrageous, and others are just plain funny — that's the charm.</p>
-      <p>We also integrate affiliate links to suggest quirky gifts or gadgets for that special someone (or yourself!).</p>
+    <div class="card" id="aboutContainer">
+      <h1 id="aboutTitle">Loading...</h1>
+      <div id="aboutContent"></div>
     </div>
   </main>
+
+  <script>
+    const langParam = new URLSearchParams(window.location.search).get('lang');
+    const userLang = langParam || (navigator.language.startsWith('pt') ? 'pt' : navigator.language.startsWith('es') ? 'es' : 'en');
+    const aboutTitle = document.getElementById('aboutTitle');
+    const aboutContent = document.getElementById('aboutContent');
+
+    fetch(`about/${userLang}.json`)
+      .then(res => res.json())
+      .then(data => {
+        aboutTitle.textContent = data.title;
+        data.paragraphs.forEach(p => {
+          const para = document.createElement('p');
+          para.textContent = p;
+          aboutContent.appendChild(para);
+        });
+      })
+      .catch(() => {
+        aboutTitle.textContent = 'Content not available';
+        aboutContent.innerHTML = '<p>Sorry, we couldn’t load the content.</p>';
+      });
+  </script>
 </body>
 </html>
