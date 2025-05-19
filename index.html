@@ -76,8 +76,10 @@
 </main>
 
 <script>
-  const langSelect = document.getElementById('langSelect');
-  const currentLang = langSelect?.value?.slice(0, 2) || 'en';
+const urlLang = new URLSearchParams(window.location.search).get('lang');
+const currentLang = urlLang?.slice(0, 2) || 
+  (navigator.language.startsWith('pt') ? 'pt' :
+   navigator.language.startsWith('es') ? 'es' : 'en');
 
   const localizedLinks = {
     navAbout: 'about.html',
