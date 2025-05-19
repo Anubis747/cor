@@ -1,36 +1,94 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Terms of Use - FlirtSpark</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <main>
-    <h1>Terms of Use</h1>
-
     <div class="nav-tabs">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="how.html">How it Works</a>
-      <a href="terms.html">Terms</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="mailto:contact@flirtspark.cc">Contact</a>
+      <a href="index.html" id="navHome">Home</a>
+      <a href="about.html" id="navAbout">About</a>
+      <a href="how.html" id="navHow">How it Works</a>
+      <a href="terms.html" id="navTerms">Terms</a>
+      <a href="privacy.html" id="navPrivacy">Privacy</a>
+      <a href="mailto:contact@flirtspark.cc" id="navContact">Contact</a>
     </div>
 
-    <div class="card">
-      <p>Welcome to FlirtSpark. By using our website, you agree to the following terms and conditions:</p>
-
-      <ul>
-        <li>This website is for entertainment purposes only. We do not guarantee the effectiveness, appropriateness, or accuracy of any pick-up lines.</li>
-        <li>You are responsible for your own interactions and communications with others based on content generated on this site.</li>
-        <li>FlirtSpark may include affiliate links (e.g., Amazon, AliExpress). If you click and make a purchase, we may earn a small commission at no extra cost to you.</li>
-        <li>We reserve the right to change these terms at any time. Continued use of the site indicates your acceptance of the updated terms.</li>
-      </ul>
-
-      <p>If you do not agree with any of these terms, please do not use our website.</p>
+    <div class="card" id="termsContainer">
+      <h1 id="termsTitle">Loading...</h1>
+      <div id="termsContent"></div>
     </div>
   </main>
+
+  <script>
+    const lang = new URLSearchParams(window.location.search).get('lang') || 
+                 (navigator.language.startsWith('pt') ? 'pt' :
+                  navigator.language.startsWith('es') ? 'es' : 'en');
+
+    const menuLabels = {
+      en: {
+        navHome: "Home",
+        navAbout: "About",
+        navHow: "How it Works",
+        navTerms: "Terms",
+        navPrivacy: "Privacy",
+        navContact: "Contact"
+      },
+      pt: {
+        navHome: "Início",
+        navAbout: "Sobre",
+        navHow: "Como Funciona",
+        navTerms: "Termos",
+        navPrivacy: "Privacidade",
+        navContact: "Contato"
+      },
+      es: {
+        navHome: "Inicio",
+        navAbout: "Acerca de",
+        navHow: "Cómo Funciona",
+        navTerms: "Términos",
+        navPrivacy: "Privacidad",
+        navContact: "Contacto"
+      }
+    };
+
+    const menuPaths = {
+      navHome: 'index.html',
+      navAbout: 'about.html',
+      navHow: 'how.html',
+      navTerms: 'terms.html',
+      navPrivacy: 'privacy.html'
+    };
+
+    const labels = menuLabels[lang];
+    for (const id in labels) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = labels[id];
+        if (menuPaths[id]) {
+          el.href = `${menuPaths[id]}?lang=${lang}`;
+        }
+      }
+    }
+
+    fetch(`terms/${lang}.json`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('termsTitle').textContent = data.title;
+        const container = document.getElementById('termsContent');
+        data.paragraphs.forEach(p => {
+          const para = document.createElement('p');
+          para.textContent = p;
+          container.appendChild(para);
+        });
+      })
+      .catch(() => {
+        document.getElementById('termsTitle').textContent = 'Content not available';
+        document.getElementById('termsContent').innerHTML = '<p>Sorry, we couldn’t load the content.</p>';
+      });
+  </script>
 </body>
 </html>
