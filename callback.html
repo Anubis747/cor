@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OAuth Code Captured</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #0f0;
+      padding: 2em;
+    }
+    h1 {
+      color: #0f0;
+    }
+    code {
+      background: #222;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔓 OAuth Code Intercepted</h1>
+  <p id="output">Waiting for parameters...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const error = params.get("error");
+
+    if (code) {
+      document.getElementById("output").innerHTML =
+        `<strong>Authorization Code:</strong> <code>${code}</code>`;
+    } else if (error) {
+      document.getElementById("output").innerHTML =
+        `<strong>OAuth Error:</strong> <code>${error}</code>`;
+    } else {
+      document.getElementById("output").innerHTML =
+        "No OAuth parameters received.";
+    }
+  </script>
+</body>
+</html>
